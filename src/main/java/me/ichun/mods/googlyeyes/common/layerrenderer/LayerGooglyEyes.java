@@ -41,6 +41,9 @@ public class LayerGooglyEyes
 
             int eyeCount = helper.getEyeCount(living);
 
+            GlStateManager.enableDepth();
+            GlStateManager.depthMask(true);
+
             for(int i = 0; i < eyeCount; i++)
             {
                 if(living.isInvisible() && helper.affectedByInvisibility(living, i))
