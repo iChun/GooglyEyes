@@ -7,6 +7,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.renderer.entity.RenderZombie;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -18,9 +20,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import java.util.List;
 import java.util.Map;
 
 @Mod(name = GooglyEyes.name, modid = GooglyEyes.modid, version = GooglyEyes.version,
@@ -59,6 +63,8 @@ public class GooglyEyes
         eventHandler = new EventHandler();
         MinecraftForge.EVENT_BUS.register(eventHandler);
     }
+
+    //TODO set up static fields for the helpers.
 
     @SuppressWarnings("unchecked")
     @Mod.EventHandler
@@ -109,6 +115,13 @@ public class GooglyEyes
                 {
                     RenderLivingBase renderLiving = (RenderLivingBase)render;
                     renderLiving.addLayer(layerGooglyEyes);
+
+                    //ZOMBIE WORKAROUND
+                    if(render instanceof RenderZombie)
+                    {
+                        List<LayerRenderer> zombieLayers = ObfuscationReflectionHelper.getPrivateValue(RenderZombie.class, (RenderZombie)render, "field_177122_o", "defaultLayers"); //TODO AT THIS OUT IN ICHUNUTIL
+                        zombieLayers.add(layerGooglyEyes);
+                    }
                 }
                 else
                 {

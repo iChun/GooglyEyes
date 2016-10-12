@@ -43,7 +43,7 @@ public class LayerGooglyEyes
 
                 GlStateManager.pushMatrix();
 
-                GlStateManager.translate(joint[0], joint[1], joint[2]);
+                GlStateManager.translate(-joint[0], -joint[1], -joint[2]);
 
                 GlStateManager.rotate(helper.getHeadYaw(living, partialTicks, i), 0.0F, 1.0F, 0.0F);
                 GlStateManager.rotate(helper.getHeadPitch(living, partialTicks, i), 1.0F, 0.0F, 0.0F);
@@ -51,21 +51,24 @@ public class LayerGooglyEyes
 
                 //TODO where do I do eye scaling?
 
-                GlStateManager.translate(eyes[0] + helper.getEyeSideOffset(living, i), eyes[1], eyes[2]);
+                GlStateManager.translate(-(eyes[0] + helper.getEyeSideOffset(living, i)), -eyes[1], -eyes[2]);
 
                 GlStateManager.rotate(helper.getEyeRotation(living, i), 0.0F, 1.0F, 0.0F);
 
-                float eyeScale = helper.getEyeScale(living, i);
+                float eyeScale = helper.getEyeScale(living, i) + helper.maxEyeSizeGrowth(living, i);
 
                 GlStateManager.scale(eyeScale, eyeScale, eyeScale * 0.5F);
 
                 textureManager.bindTexture(texGooglyEye);
 
                 //                modelGooglyEye.movePupilAndRender(0, 0, 0.0625F);
-                GlStateManager.color(1F, 1F, 1F);
+                GlStateManager.color(0.9F, 0.9F, 0.9F);
                 modelGooglyEye.renderIris(0.0625F);
 
                 GlStateManager.color(0F, 0F, 0F);
+
+                float pupilScale = helper.getPupilScale(living, i);
+                GlStateManager.scale(pupilScale, pupilScale, 1F);
                 modelGooglyEye.renderPupil(0.0625F);
 
                 GlStateManager.popMatrix();
@@ -76,6 +79,6 @@ public class LayerGooglyEyes
     @Override
     public boolean shouldCombineTextures()
     {
-        return false;
+        return true;
     }
 }

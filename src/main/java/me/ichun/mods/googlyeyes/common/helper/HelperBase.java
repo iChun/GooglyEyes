@@ -2,11 +2,13 @@ package me.ichun.mods.googlyeyes.common.helper;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.Random;
 
 public abstract class HelperBase<E extends EntityLivingBase>
 {
@@ -40,7 +42,21 @@ public abstract class HelperBase<E extends EntityLivingBase>
 
     public float getPupilScale(E living, int eye)
     {
-        return 1F;
+        Random rand = new Random(Math.abs(living.hashCode()) * 1000);
+        int time1 = 20 + rand.nextInt(20);
+        int time2 = 20 + rand.nextInt(20);
+        float eye0 = (float)Math.sin(Math.toRadians((float)living.ticksExisted / time1 * 180F % 180F));
+        float eye1 = (float)Math.sin(Math.toRadians((float)living.ticksExisted / time2 * 180F % 180F));
+        if(eye == 0)
+        {
+            return 0.3F + eye0;
+        }
+        else
+        {
+            return 0.3F + eye1;
+        }
+
+//        return 1F;
     }
 
     public float getHeadYaw(E living, float partialTick, int eye)
@@ -60,6 +76,7 @@ public abstract class HelperBase<E extends EntityLivingBase>
 
     public static HashMap<Class<? extends EntityLivingBase>, HelperBase> modelOffsetHelpers = new HashMap<Class<? extends EntityLivingBase>, HelperBase>() {{
         put(EntityPlayer.class, new HelperPlayer());
+        put(EntitySlime.class, new HelperSlime());
         put(EntitySkeleton.class, new HelperBiped());
         put(EntityZombie.class, new HelperBiped());
     }};
