@@ -5,6 +5,7 @@ import me.ichun.mods.googlyeyes.common.helper.HelperBase;
 import me.ichun.mods.googlyeyes.common.model.ModelGooglyEye;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,17 +28,26 @@ public class LayerGooglyEyes
     @Override
     public void doRenderLayer(EntityLivingBase living, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-        //TODO do not track/render if no helper exists for it.
-        GooglyTracker tracker = GooglyEyes.eventHandler.getGooglyTracker(living);
-        tracker.requireUpdate();
+        if(living.isChild()) // thepatcat: Creatures only get googly eyes in adulthood. It's science.
+        {
+            return;
+        }
 
         HelperBase helper = HelperBase.getHelperBase(living.getClass());
         if(helper != null)
         {
+            GooglyTracker tracker = GooglyEyes.eventHandler.getGooglyTracker(living);
+            tracker.requireUpdate();
+
             int eyeCount = helper.getEyeCount(living);
 
             for(int i = 0; i < eyeCount; i++)
             {
+                if(living.isInvisible() && helper.affectedByInvisibility(living, i))
+                {
+                    continue;
+                }
+
                 float[] joint = helper.getHeadJointOffset(living, i);
                 float[] eyes = helper.getEyeOffsetFromJoint(living, i);
 
@@ -49,8 +59,6 @@ public class LayerGooglyEyes
                 GlStateManager.rotate(helper.getHeadPitch(living, partialTicks, i), 1.0F, 0.0F, 0.0F);
                 GlStateManager.rotate(helper.getHeadRoll(living, partialTicks, i), 0.0F, 0.0F, -1.0F);
 
-                //TODO where do I do eye scaling?
-
                 GlStateManager.translate(-(eyes[0] + helper.getEyeSideOffset(living, i)), -eyes[1], -eyes[2]);
 
                 GlStateManager.rotate(helper.getEyeRotation(living, i), 0.0F, 1.0F, 0.0F);
@@ -61,18 +69,42 @@ public class LayerGooglyEyes
 
                 textureManager.bindTexture(texGooglyEye);
 
-                //                modelGooglyEye.movePupilAndRender(0, 0, 0.0625F);
-                GlStateManager.color(0.9F, 0.9F, 0.9F);
+                float[] irisColours = helper.getIrisColours(living, i);
+                GlStateManager.color(irisColours[0], irisColours[1], irisColours[2]);
                 modelGooglyEye.renderIris(0.0625F);
 
-                GlStateManager.color(0F, 0F, 0F);
+                float[] pupilColours = helper.getPupilColours(living, i);
+                GlStateManager.color(pupilColours[0], pupilColours[1], pupilColours[2]);
 
                 float pupilScale = helper.getPupilScale(living, i);
+                GlStateManager.pushMatrix();
                 GlStateManager.scale(pupilScale, pupilScale, 1F);
                 modelGooglyEye.renderPupil(0.0625F);
+                GlStateManager.popMatrix();
+
+                if(helper.doesEyeGlow(living, i))
+                {
+                    GlStateManager.enableBlend();
+                    GlStateManager.disableAlpha();
+                    GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+
+                    GlStateManager.color(irisColours[0], irisColours[1], irisColours[2]);
+                    modelGooglyEye.renderIris(0.0625F);
+
+                    GlStateManager.color(pupilColours[0], pupilColours[1], pupilColours[2]);
+
+                    GlStateManager.pushMatrix();
+                    GlStateManager.scale(pupilScale, pupilScale, 1F);
+                    modelGooglyEye.renderPupil(0.0625F);
+                    GlStateManager.popMatrix();
+
+                    GlStateManager.disableBlend();
+                    GlStateManager.enableAlpha();
+                }
 
                 GlStateManager.popMatrix();
             }
+            GlStateManager.color(1F, 1F, 1F, 1F);
         }
     }
 
