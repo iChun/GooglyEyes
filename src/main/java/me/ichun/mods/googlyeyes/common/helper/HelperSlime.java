@@ -6,7 +6,7 @@ public class HelperSlime extends HelperBase<EntitySlime>
 {
     public HelperSlime()
     {
-        headJoint = new float[]{ 0F, -19F/16F, 0F};
+        headJoint = new float[]{ 0F, -19F/16F, 0F };
         eyeOffset = new float[]{ 0F, 0F, 4F/16F };
     }
 

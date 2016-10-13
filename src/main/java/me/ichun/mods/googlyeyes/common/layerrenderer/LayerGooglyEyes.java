@@ -68,7 +68,7 @@ public class LayerGooglyEyes
 
                 GlStateManager.rotate(helper.getHeadYaw(living, partialTicks, i), 0.0F, 1.0F, 0.0F);
                 GlStateManager.rotate(helper.getHeadPitch(living, partialTicks, i), 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(helper.getHeadRoll(living, partialTicks, i), 0.0F, 0.0F, -1.0F);
+                GlStateManager.rotate(helper.getHeadRoll(living, partialTicks, i), 0.0F, 0.0F, 1.0F);
 
                 GlStateManager.translate(-(eyes[0] + helper.getEyeSideOffset(living, partialTicks, i)), -eyes[1], -eyes[2]);
 

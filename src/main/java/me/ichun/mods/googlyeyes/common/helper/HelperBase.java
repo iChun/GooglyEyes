@@ -146,7 +146,7 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntityBlaze.class, new HelperBase().setEyeOffset(0F, 0F, 4F/16F));
         put(EntityChicken.class, new HelperBase().setHeadJoint(0F, -15F/16F, 4F/16F).setEyeOffset(0F, 4.5F/16F, 2F/16F).setHalfInterpupillaryDistance(1.5F / 16F).setEyeScale(0.375F));
         put(EntityCow.class, new HelperBase().setHeadJoint(0F, -4F/16F, 8F/16F).setEyeOffset(0F, 1F/16F, 6F/16F).setHalfInterpupillaryDistance(3F / 16F));
-        put(EntityCreeper.class, new HelperBase().setHeadJoint(0F, -6F/16F, 0F).setEyeOffset(0F, 5F/16F, 4F/16F));
+        put(EntityCreeper.class, new HelperBase().setHeadJoint(0F, -6F/16F, 0F).setEyeOffset(0F, 5F/16F, 4F/16F)); //make creeper maaaaaaad with narrowing pupils
         put(EntityEnderman.class, new HelperEnderman());
         put(EntityGhast.class, new HelperGhast());
 
@@ -164,15 +164,13 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntitySlime.class, new HelperSlime());
         put(EntitySnowman.class, new HelperBase().setHeadJoint(0F, -4F/16F, 0F/16F).setEyeOffset(0F, 7.5F/16, 5F/16F).setHalfInterpupillaryDistance(1.5F / 16F).setEyeScale(1F));
         put(EntitySpider.class, new HelperSpider());
+        put(EntitySquid.class, new HelperSquid());
+        put(EntityVillager.class, new HelperBase().setEyeOffset(0F, 3.2F/16F, 4F/16F).setHalfInterpupillaryDistance(1.9F / 16F).setEyeScale(0.7F));
+        put(EntityWitch.class, new HelperBase().setEyeOffset(0F, 3.2F/16F, 4F/16F).setHalfInterpupillaryDistance(1.9F / 16F).setEyeScale(0.7F));
 
-        put(EntitySquid.class, new HelperTesting());
-        put(EntityVillager.class, new HelperTesting());
-        put(EntityWitch.class, new HelperTesting());
+//        put(EntityWither.class, new HelperWither());
 
-//        put(EntityWitch.class, new HelperWither());
-
-        put(EntityWolf.class, new HelperTesting());
-
+        put(EntityWolf.class, new HelperWolf());
         put(EntityZombie.class, new HelperBase()); //TODO villager zombies?
     }};
 
