@@ -112,12 +112,12 @@ public class HelperBase<E extends EntityLivingBase>
 
     public float getHeadYaw(E living, float partialTick, int eye)
     {
-        return (living.prevRotationYawHead + ((living.rotationYawHead - living.prevRotationYawHead) * partialTick)) - (living.prevRenderYawOffset + ((living.renderYawOffset - living.prevRenderYawOffset) * partialTick));
+        return interpolateRotation(living.prevRotationYawHead, living.rotationYawHead, partialTick) - interpolateRotation(living.prevRenderYawOffset, living.renderYawOffset, partialTick);
     }
 
     public float getHeadPitch(E living, float partialTick, int eye)
     {
-        return living.prevRotationPitch + ((living.rotationPitch - living.prevRotationPitch) * partialTick);
+        return interpolateRotation(living.prevRotationPitch, living.rotationPitch, partialTick);
     }
 
     public float getHeadRoll(E living, float partialTick, int eye)
@@ -188,5 +188,13 @@ public class HelperBase<E extends EntityLivingBase>
             clzz = clzz.getSuperclass();
         }
         return helper;
+    }
+
+    public float interpolateRotation(float prevAngle, float nextAngle, float partialTick)
+    {
+        float f = nextAngle - prevAngle;
+        while(f < -180.0F) { f += 360.0F; }
+        while(f >= 180.0F) { f -= 360.0F; }
+        return prevAngle + partialTick * f;
     }
 }
