@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.RenderZombie;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -24,6 +25,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +93,14 @@ public class GooglyEyes
                 e.getValue().addLayer(layerGooglyEyes);
             }
         }
+        ArrayList<RenderLivingBase> renderLivingBases = new ArrayList<>();
+        for(Map.Entry< Class <? extends Entity> , Render <? extends Entity >> entry : Minecraft.getMinecraft().getRenderManager().entityRenderMap.entrySet())
+        {
+            if(entry.getValue() instanceof RenderLivingBase && !renderLivingBases.contains(entry.getValue()))
+            {
+                renderLivingBases.add((RenderLivingBase)entry.getValue());
+            }
+        }
         for(Map.Entry<Class<? extends EntityLivingBase>, HelperBase> e : HelperBase.modelOffsetHelpers.entrySet())
         {
             boolean addLayer = true;
@@ -120,7 +130,26 @@ public class GooglyEyes
                     if(render instanceof RenderZombie)
                     {
                         List<LayerRenderer> zombieLayers = ObfuscationReflectionHelper.getPrivateValue(RenderZombie.class, (RenderZombie)render, "field_177122_o", "defaultLayers"); //TODO AT THIS OUT IN ICHUNUTIL
+                        List<LayerRenderer> villagerLayers = ObfuscationReflectionHelper.getPrivateValue(RenderZombie.class, (RenderZombie)render, "field_177121_n", "villagerLayers"); //TODO AT THIS OUT IN ICHUNUTIL
                         zombieLayers.add(layerGooglyEyes);
+                        villagerLayers.add(layerGooglyEyes);
+                    }
+
+                    for(RenderLivingBase render1 : renderLivingBases)
+                    {
+                        if(render != render1 && render.getClass().isInstance(render1))
+                        {
+                            render1.addLayer(layerGooglyEyes);
+
+                            //ZOMBIE WORKAROUND
+                            if(render1 instanceof RenderZombie)
+                            {
+                                List<LayerRenderer> zombieLayers = ObfuscationReflectionHelper.getPrivateValue(RenderZombie.class, (RenderZombie)render1, "field_177122_o", "defaultLayers"); //TODO AT THIS OUT IN ICHUNUTIL
+                                List<LayerRenderer> villagerLayers = ObfuscationReflectionHelper.getPrivateValue(RenderZombie.class, (RenderZombie)render1, "field_177121_n", "villagerLayers"); //TODO AT THIS OUT IN ICHUNUTIL
+                                zombieLayers.add(layerGooglyEyes);
+                                villagerLayers.add(layerGooglyEyes);
+                            }
+                        }
                     }
                 }
                 else

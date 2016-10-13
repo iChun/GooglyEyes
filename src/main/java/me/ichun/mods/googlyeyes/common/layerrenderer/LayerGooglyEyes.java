@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
@@ -59,17 +60,16 @@ public class LayerGooglyEyes
                     continue;
                 }
 
-                float[] joint = helper.getHeadJointOffset(living, partialTicks, i);
-                float[] eyes = helper.getEyeOffsetFromJoint(living, partialTicks, i);
-
                 GlStateManager.pushMatrix();
 
+                float[] joint = helper.getHeadJointOffset(living, partialTicks, i);
                 GlStateManager.translate(-joint[0], -joint[1], -joint[2]);
 
                 GlStateManager.rotate(helper.getHeadYaw(living, partialTicks, i), 0.0F, 1.0F, 0.0F);
                 GlStateManager.rotate(helper.getHeadPitch(living, partialTicks, i), 1.0F, 0.0F, 0.0F);
                 GlStateManager.rotate(helper.getHeadRoll(living, partialTicks, i), 0.0F, 0.0F, 1.0F);
 
+                float[] eyes = helper.getEyeOffsetFromJoint(living, partialTicks, i);
                 GlStateManager.translate(-(eyes[0] + helper.getEyeSideOffset(living, partialTicks, i)), -eyes[1], -eyes[2]);
 
                 GlStateManager.rotate(helper.getEyeRotation(living, partialTicks, i), 0.0F, 1.0F, 0.0F);

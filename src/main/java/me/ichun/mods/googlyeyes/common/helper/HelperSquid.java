@@ -22,10 +22,4 @@ public class HelperSquid extends HelperBase<EntitySquid>
     {
         return 0F;
     }
-
-    @Override
-    public float[] getEyeOffsetFromJoint(EntitySquid living, float partialTick, int eye)
-    {
-        return new float[]{ 0F, 1F/16F, 6F/16F };
-    }
 }

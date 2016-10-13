@@ -15,18 +15,13 @@ public class HelperSpider extends HelperBase<EntitySpider>
         eyeOffset = new float[] { 0F, 0F, 8F / 16F };
         irisColour = new float[] { 0.8F, 0F, 0F };
         halfInterpupillaryDistance = 1F / 16F;
+        eyeScale = 0.8F;
     }
 
     @Override
     public int getEyeCount(EntitySpider living)
     {
         return 6;
-    }
-
-    @Override
-    public float getEyeScale(EntitySpider living, float partialTick, int eye)
-    {
-        return 0.8F;
     }
 
     @Override
