@@ -136,7 +136,6 @@ public class HelperBase<E extends EntityLivingBase>
 
     //TODO handle child entities?
     //TODO dragons...?
-    //TODO Silverfish/Endermites?
     public static HashMap<Class<? extends EntityLivingBase>, HelperBase> modelOffsetHelpers = new HashMap<Class<? extends EntityLivingBase>, HelperBase>() {{
         put(EntityPlayer.class, new HelperPlayer());
         put(EntityBat.class, new HelperBat());
@@ -145,6 +144,7 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntityCow.class, new HelperBase().setHeadJoint(0F, -4F/16F, 8F/16F).setEyeOffset(0F, 1F/16F, 6F/16F).setHalfInterpupillaryDistance(3F / 16F));
         put(EntityCreeper.class, new HelperBase().setHeadJoint(0F, -6F/16F, 0F).setEyeOffset(0F, 5F/16F, 4F/16F)); //make creeper maaaaaaad with narrowing pupils
         put(EntityEnderman.class, new HelperEnderman());
+        put(EntityEndermite.class, new HelperEndermite());
         put(EntityGhast.class, new HelperGhast());
         put(EntityGuardian.class, new HelperGuardian());
         put(EntityHorse.class, new HelperHorse());
@@ -158,6 +158,7 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntityRabbit.class, new HelperBase().setHeadJoint(0F, -16F/16F * 0.6F - (1F * 0.6F), 1F/16F * 0.6F).setEyeOffset(0F, 3F/16F * 0.6F, 5F/16F * 0.6F).setHalfInterpupillaryDistance(1F / 16F * 0.6F).setEyeScale(0.6F  * 0.6F)); //Bunnie scaling is annoying AF
         put(EntitySheep.class, new HelperSheep());
         put(EntityShulker.class, new HelperShulker());
+        put(EntitySilverfish.class, new HelperSilverfish());
         put(EntitySkeleton.class, new HelperBase());
         put(EntitySlime.class, new HelperSlime());
         put(EntitySnowman.class, new HelperBase().setHeadJoint(0F, -4F/16F, 0F/16F).setEyeOffset(0F, 7.5F/16, 5F/16F).setHalfInterpupillaryDistance(1.5F / 16F).setEyeScale(1F));
