@@ -4,13 +4,19 @@ import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.googlyeyes.common.helper.HelperBase;
 import me.ichun.mods.googlyeyes.common.model.ModelGooglyEye;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import org.lwjgl.input.Keyboard;
 
 @SuppressWarnings("unchecked")
@@ -30,11 +36,6 @@ public class LayerGooglyEyes
     @Override
     public void doRenderLayer(EntityLivingBase living, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-        if(living.isChild()) // thepatcat: Creatures only get googly eyes in adulthood. It's science.
-        {
-            return;
-        }
-
         HelperBase helper = HelperBase.getHelperBase(living.getClass());
         if(helper != null && !Keyboard.isKeyDown(Keyboard.KEY_TAB))
         {
@@ -61,6 +62,49 @@ public class LayerGooglyEyes
                 }
 
                 GlStateManager.pushMatrix();
+
+                // thepatcat: Creatures only get googly eyes in adulthood. It's science.
+                if(living.isChild()) //I don't like this if statement any more than you do.
+                {
+                    Render render = Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(living);
+                    if(render instanceof RenderLivingBase)
+                    {
+                        float modelScale = 0.0625F;
+                        ModelBase model = ((RenderLivingBase)render).getMainModel();
+                        if(model instanceof ModelBiped)
+                        {
+                            GlStateManager.scale(0.75F, 0.75F, 0.75F);
+                            GlStateManager.translate(0.0F, 16.0F * modelScale, 0.0F);
+                        }
+                        else if(model instanceof ModelQuadruped)
+                        {
+                            float childYOffset = ObfuscationReflectionHelper.getPrivateValue(ModelQuadruped.class, (ModelQuadruped)model, "field_78145_g", "childYOffset");
+                            float childZOffset = ObfuscationReflectionHelper.getPrivateValue(ModelQuadruped.class, (ModelQuadruped)model, "field_78151_h", "childZOffset");
+
+                            if(model instanceof ModelPolarBear)
+                            {
+                                GlStateManager.scale(0.6666667F, 0.6666667F, 0.6666667F);
+                            }
+                            GlStateManager.translate(0.0F, childYOffset * modelScale, childZOffset * modelScale);
+                        }
+                        else if(model instanceof ModelChicken || model instanceof ModelWolf)
+                        {
+                            GlStateManager.translate(0.0F, 5.0F * modelScale, 2.0F * modelScale);
+                        }
+                        else if(model instanceof ModelOcelot)
+                        {
+                            GlStateManager.scale(0.75F, 0.75F, 0.75F);
+                            GlStateManager.translate(0.0F, 10.0F * modelScale, 4.0F * modelScale);
+                        }
+                        else if(model instanceof ModelHorse && living instanceof EntityHorse)
+                        {
+                            float f1 = ((EntityHorse)living).getHorseSize();
+
+                            GlStateManager.scale(f1, f1, f1);
+                            GlStateManager.translate(0.0F, 1.35F * (1.0F - f1), 0.0F);
+                        }
+                    }
+                }
 
                 float[] joint = helper.getHeadJointOffset(living, partialTicks, i);
                 GlStateManager.translate(-joint[0], -joint[1], -joint[2]);

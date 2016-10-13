@@ -1,6 +1,7 @@
 package me.ichun.mods.googlyeyes.common.helper;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.*;
@@ -135,7 +136,6 @@ public class HelperBase<E extends EntityLivingBase>
     }
 
     //TODO handle child entities?
-    //TODO dragons...?
     public static HashMap<Class<? extends EntityLivingBase>, HelperBase> modelOffsetHelpers = new HashMap<Class<? extends EntityLivingBase>, HelperBase>() {{
         put(EntityPlayer.class, new HelperPlayer());
         put(EntityBat.class, new HelperBat());
@@ -143,6 +143,7 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntityChicken.class, new HelperBase().setHeadJoint(0F, -15F/16F, 4F/16F).setEyeOffset(0F, 4.5F/16F, 2F/16F).setHalfInterpupillaryDistance(1.5F / 16F).setEyeScale(0.375F));
         put(EntityCow.class, new HelperBase().setHeadJoint(0F, -4F/16F, 8F/16F).setEyeOffset(0F, 1F/16F, 6F/16F).setHalfInterpupillaryDistance(3F / 16F));
         put(EntityCreeper.class, new HelperBase().setHeadJoint(0F, -6F/16F, 0F).setEyeOffset(0F, 5F/16F, 4F/16F)); //make creeper maaaaaaad with narrowing pupils
+        put(EntityDragon.class, new HelperDragon());
         put(EntityEnderman.class, new HelperEnderman());
         put(EntityEndermite.class, new HelperEndermite());
         put(EntityGhast.class, new HelperGhast());
@@ -155,7 +156,7 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntityPig.class, new HelperBase().setHeadJoint(0F, -12F/16F, 6F/16F).setEyeOffset(0F, 0.5F/16F, 8F/16F).setHalfInterpupillaryDistance(3F/16F));
         put(EntityPigZombie.class, new HelperPigZombie());
         put(EntityPolarBear.class, new HelperBase().setHeadJoint(0F, -10F/16F, 16F/16F).setEyeOffset(0F, -0.5F/16F, 3F/16F).setEyeScale(0.4F));
-        put(EntityRabbit.class, new HelperBase().setHeadJoint(0F, -16F/16F * 0.6F - (1F * 0.6F), 1F/16F * 0.6F).setEyeOffset(0F, 3F/16F * 0.6F, 5F/16F * 0.6F).setHalfInterpupillaryDistance(1F / 16F * 0.6F).setEyeScale(0.6F  * 0.6F)); //Bunnie scaling is annoying AF
+        put(EntityRabbit.class, new HelperRabbit());
         put(EntitySheep.class, new HelperSheep());
         put(EntityShulker.class, new HelperShulker());
         put(EntitySilverfish.class, new HelperSilverfish());

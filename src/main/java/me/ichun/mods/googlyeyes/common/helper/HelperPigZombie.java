@@ -18,7 +18,7 @@ public class HelperPigZombie extends HelperBase<EntityPigZombie>
     @Override
     public float getEyeScale(EntityPigZombie living, float partialTick, int eye)
     {
-        if(eye == 1)
+        if(eye == 1 && !living.isChild())
         {
             return eyeScaleSkin;
         }
@@ -28,7 +28,7 @@ public class HelperPigZombie extends HelperBase<EntityPigZombie>
     @Override
     public float[] getEyeOffsetFromJoint(EntityPigZombie living, float partialTick, int eye)
     {
-        if(eye == 1)
+        if(eye == 1 && !living.isChild())
         {
             return eyeOffsetSkin;
         }

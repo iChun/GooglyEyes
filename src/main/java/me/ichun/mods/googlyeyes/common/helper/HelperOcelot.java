@@ -19,6 +19,21 @@ public class HelperOcelot extends HelperBase<EntityOcelot>
         };
     }
 
+    @Override
+    public float[] getHeadJointOffset(EntityOcelot living, float partialTick, int eye)
+    {
+        if(living.isSneaking())
+        {
+            return new float[]{ 0F, -17F/16F, 9F/16F };
+        }
+        else if(living.isSitting())
+        {
+            return new float[]{ 0F, -11.7F/16F, 8F/16F };
+        }
+        return headJoint;
+    }
+
+    @Override
     public float[] getPupilColours(EntityOcelot living, float partialTick, int eye)
     {
         livingRand.setSeed(Math.abs(living.hashCode()) * 1231);
