@@ -1,9 +1,11 @@
 package me.ichun.mods.googlyeyes.common.helper;
 
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.monster.EntityPigZombie;
 
 public class HelperPigZombie extends HelperBase<EntityPigZombie>
 {
+    public float[] headJointSneak = new float[] { 0F, -1F/16F, 0F };
     public float[] eyeOffsetSkin = new float[]{ -0.35F/16F, 4.5F/16F, 4.5F/16F };
     public float eyeScaleSkin = 0.65F;
 
@@ -33,5 +35,16 @@ public class HelperPigZombie extends HelperBase<EntityPigZombie>
             return eyeOffsetSkin;
         }
         return eyeOffset;
+    }
+
+    @Override
+    public float[] getHeadJointOffset(EntityPigZombie living, float partialTick, int eye)
+    {
+        if(living.isSneaking())
+        {
+            GlStateManager.translate(0.0F, 0.2F, 0.0F);
+            return headJointSneak;
+        }
+        return headJoint;
     }
 }

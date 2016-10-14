@@ -84,7 +84,7 @@ public class HelperBase<E extends EntityLivingBase>
         return 0F;
     }
 
-    public float getPupilScale(E living, float partialTick, int eye) //TODO trigger acid on config or if the entity has a potion effect
+    public float getPupilScale(E living, float partialTick, int eye)
     {
         if(GooglyEyes.config.acidTripEyes == 1 || !living.getActivePotionEffects().isEmpty())
         {
@@ -158,8 +158,6 @@ public class HelperBase<E extends EntityLivingBase>
         return living.rotationPitch;
     }
 
-
-    //TODO handle child entities?
     public static HashMap<Class<? extends EntityLivingBase>, HelperBase> modelOffsetHelpers = new HashMap<Class<? extends EntityLivingBase>, HelperBase>() {{
         put(EntityPlayer.class, new HelperPlayer());
         put(EntityBat.class, new HelperBat());
@@ -184,7 +182,7 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntitySheep.class, new HelperSheep());
         put(EntityShulker.class, new HelperShulker());
         put(EntitySilverfish.class, new HelperSilverfish());
-        put(EntitySkeleton.class, new HelperBase());
+        put(EntitySkeleton.class, new HelperBiped());
         put(EntitySlime.class, new HelperSlime());
         put(EntitySnowman.class, new HelperBase().setHeadJoint(0F, -4F/16F, 0F/16F).setEyeOffset(0F, 7.5F/16, 5F/16F).setHalfInterpupillaryDistance(1.5F / 16F).setEyeScale(1F));
         put(EntitySpider.class, new HelperSpider());

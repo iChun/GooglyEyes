@@ -41,6 +41,11 @@ public class GooglyTracker
         public float momentumX;
         public float momentumY;
 
+        public EyeInfo()
+        {
+            prevDeltaY = deltaY = -1F;
+        }
+
         public void update(int eye, GooglyTracker parent, double motionX, double motionY, double motionZ)
         {
             prevRotationYaw = rotationYaw;
