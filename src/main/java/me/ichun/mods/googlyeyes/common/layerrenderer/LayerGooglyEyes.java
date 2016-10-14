@@ -7,14 +7,12 @@ import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import org.lwjgl.input.Keyboard;
@@ -39,7 +37,11 @@ public class LayerGooglyEyes
         HelperBase helper = HelperBase.getHelperBase(living.getClass());
         if(helper != null && !Keyboard.isKeyDown(Keyboard.KEY_TAB))
         {
-            GooglyTracker tracker = GooglyEyes.eventHandler.getGooglyTracker(living);
+            GooglyTracker tracker = GooglyEyes.eventHandler.getGooglyTracker(living, helper);
+            if(!tracker.shouldRender())
+            {
+                return;
+            }
             tracker.requireUpdate();
 
             int eyeCount = helper.getEyeCount(living);

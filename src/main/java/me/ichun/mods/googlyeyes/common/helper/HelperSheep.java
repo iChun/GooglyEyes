@@ -33,6 +33,12 @@ public class HelperSheep extends HelperBase<EntitySheep>
     }
 
     @Override
+    public float getHeadPitchForTracker(EntitySheep living)
+    {
+        return (float)Math.toDegrees(living.getHeadRotationAngleX(1F));
+    }
+
+    @Override
     public float getPupilScale(EntitySheep living, float partialTick, int eye)
     {
         if(living.getSheared())

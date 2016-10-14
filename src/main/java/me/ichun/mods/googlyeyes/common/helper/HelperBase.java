@@ -1,5 +1,6 @@
 package me.ichun.mods.googlyeyes.common.helper;
 
+import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
@@ -85,19 +86,21 @@ public class HelperBase<E extends EntityLivingBase>
 
     public float getPupilScale(E living, float partialTick, int eye) //TODO trigger acid on config or if the entity has a potion effect
     {
-        livingRand.setSeed(Math.abs(living.hashCode()) * 1000);
-        int eyeCount = getEyeCount(living);
-        if(acidTime == null || acidTime.length < eyeCount)
+        if(GooglyEyes.config.acidTripEyes == 1 || !living.getActivePotionEffects().isEmpty())
         {
-            acidTime = new int[eyeCount];
+            livingRand.setSeed(Math.abs(living.hashCode()) * 1000);
+            int eyeCount = getEyeCount(living);
+            if(acidTime == null || acidTime.length < eyeCount)
+            {
+                acidTime = new int[eyeCount];
+            }
+            for(int i = 0; i < eyeCount; i++)
+            {
+                acidTime[i] = 20 + livingRand.nextInt(20);
+            }
+            return 0.3F + ((float)Math.sin(Math.toRadians((living.ticksExisted + partialTick) / acidTime[eye] * 360F)) + 1F) / 2F;
         }
-        for(int i = 0; i < eyeCount; i++)
-        {
-            acidTime[i] = 20 + livingRand.nextInt(20);
-        }
-        return 0.3F + ((float)Math.sin(Math.toRadians((living.ticksExisted + partialTick) / acidTime[eye] * 360F)) + 1F) / 2F;
-
-        //        return 1F;
+        return 1F;
     }
 
     public float[] getIrisColours(E living, float partialTick, int eye)
@@ -134,6 +137,17 @@ public class HelperBase<E extends EntityLivingBase>
     {
         return false;
     }
+
+    public float getHeadYawForTracker(E living)
+    {
+        return living.rotationYawHead;
+    }
+
+    public float getHeadPitchForTracker(E living)
+    {
+        return living.rotationPitch;
+    }
+
 
     //TODO handle child entities?
     public static HashMap<Class<? extends EntityLivingBase>, HelperBase> modelOffsetHelpers = new HashMap<Class<? extends EntityLivingBase>, HelperBase>() {{

@@ -49,4 +49,16 @@ public class HelperMagmaCube extends HelperBase<EntityMagmaCube>
     {
         return 0F;
     }
+
+    @Override
+    public float getHeadYawForTracker(EntityMagmaCube living)
+    {
+        return living.renderYawOffset;
+    }
+
+    @Override
+    public float getHeadPitchForTracker(EntityMagmaCube living)
+    {
+        return 0F;
+    }
 }

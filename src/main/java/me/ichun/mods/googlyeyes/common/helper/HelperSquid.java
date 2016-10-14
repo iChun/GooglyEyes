@@ -22,4 +22,16 @@ public class HelperSquid extends HelperBase<EntitySquid>
     {
         return 0F;
     }
+
+    @Override
+    public float getHeadYawForTracker(EntitySquid living)
+    {
+        return -living.squidYaw;
+    }
+
+    @Override
+    public float getHeadPitchForTracker(EntitySquid living)
+    {
+        return -living.squidPitch;
+    }
 }

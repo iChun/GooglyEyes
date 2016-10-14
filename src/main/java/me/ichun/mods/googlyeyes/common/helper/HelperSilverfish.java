@@ -28,6 +28,20 @@ public class HelperSilverfish extends HelperBase<EntitySilverfish>
     }
 
     @Override
+    public float getHeadYawForTracker(EntitySilverfish living)
+    {
+        int i = 0;
+        float ageInTicks = (float)living.ticksExisted;
+        return (float)Math.toDegrees(MathHelper.cos(ageInTicks * 0.9F + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.05F * (float)(1 + Math.abs(i - 2)));
+    }
+
+    @Override
+    public float getHeadPitchForTracker(EntitySilverfish living)
+    {
+        return 0F;
+    }
+
+    @Override
     public float[] getHeadJointOffset(EntitySilverfish living, float partialTick, int eye)
     {
         int i = 0;

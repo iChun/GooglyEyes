@@ -21,4 +21,16 @@ public class HelperSlime extends HelperBase<EntitySlime>
     {
         return 0F;
     }
+
+    @Override
+    public float getHeadYawForTracker(EntitySlime living)
+    {
+        return living.renderYawOffset;
+    }
+
+    @Override
+    public float getHeadPitchForTracker(EntitySlime living)
+    {
+        return 0F;
+    }
 }

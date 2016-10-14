@@ -1,12 +1,18 @@
 package me.ichun.mods.googlyeyes.common.tracker;
 
+import me.ichun.mods.googlyeyes.common.GooglyEyes;
+import me.ichun.mods.googlyeyes.common.helper.HelperBase;
 import net.minecraft.entity.EntityLivingBase;
 
 import javax.annotation.Nonnull;
+import java.util.Random;
 
 public class GooglyTracker
 {
     public final EntityLivingBase parent;
+    public final HelperBase helper;
+    public final Random rand;
+    public final float renderChance;
 
     public boolean shouldUpdate = true;
     public long lastUpdateRequest;
@@ -22,16 +28,22 @@ public class GooglyTracker
     public float prevRotationPitch;
     public float rotationPitch;
 
-    public GooglyTracker(@Nonnull EntityLivingBase parent)
+    public double deltaX;
+    public double deltaY;
+
+    public GooglyTracker(@Nonnull EntityLivingBase parent, @Nonnull HelperBase helper)
     {
         this.parent = parent;
+        this.helper = helper;
+        this.rand = new Random(Math.abs(parent.hashCode()) * 8134);
+        this.renderChance = rand.nextFloat();
 
         update();
     }
 
     public void update()
     {
-        if(!shouldUpdate)
+        if(!shouldUpdate || shouldRender())
         {
             return;
         }
@@ -45,18 +57,21 @@ public class GooglyTracker
         motionY = parent.posY - parent.prevPosY;
         motionZ = parent.posZ - parent.prevPosZ;
 
-        //TODO remember to account for ghasts.
+        prevRotationYaw = rotationYaw;
+        prevRotationPitch = rotationPitch;
 
-        prevRotationYaw = parent.prevRotationYawHead;
-        rotationYaw = parent.rotationYaw;
-
-        prevRotationPitch = parent.prevRotationPitch;
-        rotationPitch = parent.rotationPitch;
+        rotationYaw = helper.getHeadYawForTracker(parent);
+        rotationPitch = helper.getHeadPitchForTracker(parent);
     }
 
     public void requireUpdate()
     {
         shouldUpdate = true;
         lastUpdateRequest = parent.worldObj.getWorldTime();
+    }
+
+    public boolean shouldRender()
+    {
+        return renderChance < (GooglyEyes.config.googlyEyeChance / 100F);
     }
 }

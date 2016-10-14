@@ -34,6 +34,18 @@ public class HelperDragon extends HelperBase<EntityDragon>
     }
 
     @Override
+    public float getHeadYawForTracker(EntityDragon living)
+    {
+        return yaw;
+    }
+
+    @Override
+    public float getHeadPitchForTracker(EntityDragon living)
+    {
+        return pitch;
+    }
+
+    @Override
     public float[] getHeadJointOffset(EntityDragon living, float partialTick, int eye)
     {
         float f = living.prevAnimTime + (living.animTime - living.prevAnimTime) * partialTick;

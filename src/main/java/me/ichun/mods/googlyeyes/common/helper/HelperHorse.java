@@ -24,4 +24,15 @@ public class HelperHorse extends HelperBase<EntityHorse>
         return (float)Math.toDegrees(living.getRearingAmount(partialTick) * ((float)Math.PI / 4F));
     }
 
+    @Override
+    public float getHeadYawForTracker(EntityHorse living)
+    {
+        return living.renderYawOffset;
+    }
+
+    @Override
+    public float getHeadPitchForTracker(EntityHorse living)
+    {
+        return (float)Math.toDegrees(living.getRearingAmount(1F) * ((float)Math.PI / 4F));
+    }
 }

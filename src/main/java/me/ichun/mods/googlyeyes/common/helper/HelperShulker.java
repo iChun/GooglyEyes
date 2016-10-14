@@ -65,4 +65,10 @@ public class HelperShulker extends HelperBase<EntityShulker>
         return 0F;
     }
 
+    @Override
+    public float getHeadPitchForTracker(EntityShulker living)
+    {
+        return 0F;
+    }
+
 }

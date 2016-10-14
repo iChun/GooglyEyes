@@ -33,4 +33,16 @@ public class HelperGhast extends HelperBase<EntityGhast>
     {
         return 0F;
     }
+
+    @Override
+    public float getHeadYawForTracker(EntityGhast living)
+    {
+        return living.renderYawOffset;
+    }
+
+    @Override
+    public float getHeadPitchForTracker(EntityGhast living)
+    {
+        return 0F;
+    }
 }
