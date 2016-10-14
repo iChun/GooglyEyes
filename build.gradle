@@ -12,6 +12,9 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 version = "1.10.2-6.0.0"
 group = "googlyeyes"
 archivesBaseName = "GooglyEyes"
