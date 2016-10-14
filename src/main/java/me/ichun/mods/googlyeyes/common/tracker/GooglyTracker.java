@@ -152,6 +152,6 @@ public class GooglyTracker
 
     public boolean shouldRender()
     {
-        return true;//renderChance < (GooglyEyes.config.googlyEyeChance / 100F);
+        return renderChance < (GooglyEyes.config.googlyEyeChance / 100F);
     }
 }
