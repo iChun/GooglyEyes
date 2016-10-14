@@ -56,7 +56,7 @@ public class GooglyTracker
             float yawDiff = rotationYaw - prevRotationYaw;
             float pitchDiff = rotationPitch - prevRotationPitch;
 
-            momentumY += motionY * 1.5F + (motionX + motionZ) * rand.nextGaussian() * 0.2F + (pitchDiff / 90F) + (yawDiff / 180F);
+            momentumY += motionY * 1.5F + (motionX + motionZ) * rand.nextGaussian() * (0.75F) + (pitchDiff / 45F) + (yawDiff / 180F);
             momentumX -= (motionX + motionZ) * rand.nextGaussian() * 0.4F + (yawDiff / 45F);
 
             //Physics based!
@@ -68,7 +68,7 @@ public class GooglyTracker
                 float newMo = momentumX * -momentumLoss;
                 float randFloat = 0.8F + rand.nextFloat() * 0.2F;
                 momentumX = newMo * randFloat;
-                momentumY += newMo * (1F - randFloat) * (rand.nextFloat() > 0.5F ? 1F : -1F);
+                momentumY += newMo * (randFloat) * (rand.nextFloat() > 0.5F ? 1F : -1F);
             }
             if(newDeltaY < -1F || newDeltaY > 1F)
             {

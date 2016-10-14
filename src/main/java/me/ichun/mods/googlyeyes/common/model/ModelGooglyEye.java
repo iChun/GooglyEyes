@@ -131,11 +131,11 @@ public class ModelGooglyEye extends ModelBase {
     public void movePupil(float x, float y, float pupilSize)
     {
         //irissiize will never be used, entire eye is scaled.
-        float shiftFactor = 1.45F;
+        float shiftFactor = (1.45F - pupilSize * 0.525F) / pupilSize;
         for(int i = 0; i < pupils.length; i++)
         {
-            pupils[i].rotationPointX = -x * shiftFactor;
-            pupils[i].rotationPointY = -y * shiftFactor;
+            pupils[i].rotationPointX = -x * shiftFactor;// * (float)Math.cos(Math.toRadians((y / 1F) * 90F));
+            pupils[i].rotationPointY = -y * shiftFactor * (float)Math.cos(Math.toRadians((x / 1F) * 90F));
         }
     }
 
