@@ -138,6 +138,16 @@ public class HelperBase<E extends EntityLivingBase>
         return false;
     }
 
+    public float getHeadYawForTracker(E living, int eye)
+    {
+        return getHeadYawForTracker(living);
+    }
+
+    public float getHeadPitchForTracker(E living, int eye)
+    {
+        return getHeadPitchForTracker(living);
+    }
+
     public float getHeadYawForTracker(E living)
     {
         return living.rotationYawHead;

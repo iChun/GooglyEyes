@@ -52,6 +52,7 @@ public class GooglyEyes
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
 
+        GooglyEyes.config = new Config();
         GooglyEyes.config.disabledGoogly = config.getStringList("disabledGoogly", "general", GooglyEyes.config.disabledGoogly, "To disable Googly Eyes on a specific entity, put their registry name in here.\nFor Players, put \"player\"");
         GooglyEyes.config.acidTripEyes = config.getInt("acidTripEyes", "general", GooglyEyes.config.acidTripEyes, 0, 1, "Let them googly eyes be trippin'");
         GooglyEyes.config.googlyEyeChance = config.getInt("googlyEyeChance", "general", GooglyEyes.config.googlyEyeChance, 0, 100, "Googly Eye chance (in %)");

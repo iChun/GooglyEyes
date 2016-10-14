@@ -21,12 +21,7 @@ public class ModelGooglyEye extends ModelBase {
     public ModelRenderer iris3;
     public ModelRenderer iris2;
     public ModelRenderer iris1;
-    public ModelRenderer pupil6;
-    public ModelRenderer pupil5;
-    public ModelRenderer pupil4;
-    public ModelRenderer pupil3;
-    public ModelRenderer pupil2;
-    public ModelRenderer pupil1;
+    public ModelRenderer[] pupils = new ModelRenderer[6];
 
     public ModelGooglyEye()
     {
@@ -51,18 +46,18 @@ public class ModelGooglyEye extends ModelBase {
         this.iris11.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.iris11.addBox(-0.5F, -1.88F, -1.0F, 1, 3, 1, 0.0F);
         this.setRotateAngle(iris11, 0.0F, -0.0F, 0.5235987755982988F);
-        this.pupil1 = new ModelRenderer(this, 0, 0);
-        this.pupil1.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.pupil1.addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
-        this.setRotateAngle(pupil1, 0.0F, -0.0F, -1.0471975511965976F);
+        pupils[0] = new ModelRenderer(this, 0, 0);
+        pupils[0].setRotationPoint(0.0F, 0.0F, 0.0F);
+        pupils[0].addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
+        this.setRotateAngle(pupils[0], 0.0F, -0.0F, -1.0471975511965976F);
         this.iris4 = new ModelRenderer(this, 0, 0);
         this.iris4.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.iris4.addBox(-0.5F, -1.88F, -1.0F, 1, 3, 1, 0.0F);
         this.setRotateAngle(iris4, 0.0F, -0.0F, -2.0943951023931953F);
-        this.pupil4 = new ModelRenderer(this, 0, 0);
-        this.pupil4.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.pupil4.addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
-        this.setRotateAngle(pupil4, 0.0F, -0.0F, 2.0943951023931953F);
+        pupils[3] = new ModelRenderer(this, 0, 0);
+        pupils[3].setRotationPoint(0.0F, 0.0F, 0.0F);
+        pupils[3].addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
+        this.setRotateAngle(pupils[3], 0.0F, -0.0F, 2.0943951023931953F);
         this.iris5 = new ModelRenderer(this, 0, 0);
         this.iris5.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.iris5.addBox(-0.5F, -1.88F, -1.0F, 1, 3, 1, 0.0F);
@@ -71,29 +66,29 @@ public class ModelGooglyEye extends ModelBase {
         this.iris7.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.iris7.addBox(-0.5F, -1.88F, -1.0F, 1, 3, 1, 0.0F);
         this.setRotateAngle(iris7, 0.0F, -0.0F, 2.6179938779914944F);
-        this.pupil6 = new ModelRenderer(this, 0, 0);
-        this.pupil6.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.pupil6.addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
-        this.pupil5 = new ModelRenderer(this, 0, 0);
-        this.pupil5.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.pupil5.addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
-        this.setRotateAngle(pupil5, 0.0F, -0.0F, 1.0471975511965976F);
+        pupils[5] = new ModelRenderer(this, 0, 0);
+        pupils[5].setRotationPoint(0.0F, 0.0F, 0.0F);
+        pupils[5].addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
+        pupils[4] = new ModelRenderer(this, 0, 0);
+        pupils[4].setRotationPoint(0.0F, 0.0F, 0.0F);
+        pupils[4].addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
+        this.setRotateAngle(pupils[4], 0.0F, -0.0F, 1.0471975511965976F);
         this.iris3 = new ModelRenderer(this, 0, 0);
         this.iris3.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.iris3.addBox(-0.5F, -1.88F, -1.0F, 1, 3, 1, 0.0F);
         this.setRotateAngle(iris3, 0.0F, -0.0F, -1.5707963267948966F);
-        this.pupil3 = new ModelRenderer(this, 0, 0);
-        this.pupil3.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.pupil3.addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
-        this.setRotateAngle(pupil3, 0.0F, -0.0F, -3.141592653589793F);
+        pupils[2] = new ModelRenderer(this, 0, 0);
+        pupils[2].setRotationPoint(0.0F, 0.0F, 0.0F);
+        pupils[2].addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
+        this.setRotateAngle(pupils[2], 0.0F, -0.0F, -3.141592653589793F);
         this.iris9 = new ModelRenderer(this, 0, 0);
         this.iris9.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.iris9.addBox(-0.5F, -1.88F, -1.0F, 1, 3, 1, 0.0F);
         this.setRotateAngle(iris9, 0.0F, -0.0F, 1.5707963267948966F);
-        this.pupil2 = new ModelRenderer(this, 0, 0);
-        this.pupil2.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.pupil2.addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
-        this.setRotateAngle(pupil2, 0.0F, -0.0F, -2.0943951023931953F);
+        pupils[1] = new ModelRenderer(this, 0, 0);
+        pupils[1].setRotationPoint(0.0F, 0.0F, 0.0F);
+        pupils[1].addBox(-0.5F, -0.88F, -1.5F, 1, 1, 1, 0.0F);
+        this.setRotateAngle(pupils[1], 0.0F, -0.0F, -2.0943951023931953F);
         this.iris10 = new ModelRenderer(this, 0, 0);
         this.iris10.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.iris10.addBox(-0.5F, -1.88F, -1.0F, 1, 3, 1, 0.0F);
@@ -127,18 +122,21 @@ public class ModelGooglyEye extends ModelBase {
 
     public void renderPupil(float f5)
     {
-        this.pupil1.render(f5);
-        this.pupil2.render(f5);
-        this.pupil3.render(f5);
-        this.pupil4.render(f5);
-        this.pupil5.render(f5);
-        this.pupil6.render(f5);
+        for(int i = 0; i < pupils.length; i++)
+        {
+            pupils[i].render(f5);
+        }
     }
 
-    public void movePupilAndRender(float x, float y, float f5)
+    public void movePupil(float x, float y, float pupilSize)
     {
-        renderIris(f5);
-        renderPupil(f5);
+        //irissiize will never be used, entire eye is scaled.
+        float shiftFactor = 1.45F;
+        for(int i = 0; i < pupils.length; i++)
+        {
+            pupils[i].rotationPointX = -x * shiftFactor;
+            pupils[i].rotationPointY = -y * shiftFactor;
+        }
     }
 
     /**

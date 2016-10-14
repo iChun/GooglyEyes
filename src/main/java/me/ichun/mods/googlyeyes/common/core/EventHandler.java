@@ -32,18 +32,21 @@ public class EventHandler
     {
         if(event.phase == TickEvent.Phase.END)
         {
-            Iterator<Map.Entry<EntityLivingBase, GooglyTracker>> ite = trackers.entrySet().iterator();
-            while(ite.hasNext())
+            if(Minecraft.getMinecraft().theWorld != null && !Minecraft.getMinecraft().isGamePaused())
             {
-                Map.Entry<EntityLivingBase, GooglyTracker> e = ite.next();
-                GooglyTracker tracker = e.getValue();
-                if(tracker.parent.worldObj.getWorldTime() - tracker.lastUpdateRequest > 3) //If the tracker hasn't been updated for 3 ticks, assume the entity has despawned
+                Iterator<Map.Entry<EntityLivingBase, GooglyTracker>> ite = trackers.entrySet().iterator();
+                while(ite.hasNext())
                 {
-                    ite.remove();
-                }
-                else
-                {
-                    tracker.update();
+                    Map.Entry<EntityLivingBase, GooglyTracker> e = ite.next();
+                    GooglyTracker tracker = e.getValue();
+                    if(tracker.parent.worldObj.getWorldTime() - tracker.lastUpdateRequest > 3) //If the tracker hasn't been updated for 3 ticks, assume the entity has despawned
+                    {
+                        ite.remove();
+                    }
+                    else
+                    {
+                        tracker.update();
+                    }
                 }
             }
         }

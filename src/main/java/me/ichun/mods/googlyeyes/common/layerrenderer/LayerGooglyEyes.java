@@ -35,7 +35,7 @@ public class LayerGooglyEyes
     public void doRenderLayer(EntityLivingBase living, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
         HelperBase helper = HelperBase.getHelperBase(living.getClass());
-        if(helper != null && !Keyboard.isKeyDown(Keyboard.KEY_TAB))
+        if(helper != null)
         {
             GooglyTracker tracker = GooglyEyes.eventHandler.getGooglyTracker(living, helper);
             if(!tracker.shouldRender())
@@ -134,6 +134,7 @@ public class LayerGooglyEyes
                 float pupilScale = helper.getPupilScale(living, partialTicks, i);
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(pupilScale, pupilScale, 1F);
+                modelGooglyEye.movePupil(tracker.eyes[i].prevDeltaX + (tracker.eyes[i].deltaX - tracker.eyes[i].prevDeltaX) * partialTicks, tracker.eyes[i].prevDeltaY + (tracker.eyes[i].deltaY - tracker.eyes[i].prevDeltaY) * partialTicks, pupilScale);
                 modelGooglyEye.renderPupil(0.0625F);
                 GlStateManager.popMatrix();
 

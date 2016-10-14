@@ -61,6 +61,32 @@ public class HelperWither extends HelperBase<EntityWither>
     }
 
     @Override
+    public float getHeadYawForTracker(EntityWither living, int eye)
+    {
+        if(eye <= 1)
+        {
+            return super.getHeadYawForTracker(living, eye);
+        }
+        else
+        {
+            return living.getHeadYRotation(eye <= 3 ? 1 : 0);
+        }
+    }
+
+    @Override
+    public float getHeadPitchForTracker(EntityWither living, int eye)
+    {
+        if(eye <= 1)
+        {
+            return super.getHeadPitchForTracker(living);
+        }
+        else
+        {
+            return living.getHeadXRotation(eye <= 3 ? 1 : 0);
+        }
+    }
+
+    @Override
     public float getEyeSideOffset(EntityWither living, float partialTick, int eye)
     {
         if(eye <= 1)
