@@ -33,7 +33,7 @@ import java.util.Map;
 @Mod(name = GooglyEyes.name, modid = GooglyEyes.modid, version = GooglyEyes.version,
         clientSideOnly = true,
         acceptableRemoteVersions = "*",
-        dependencies = "required-after:Forge@[12.18.2.2103,)"
+        dependencies = "required-after:Forge@[12.18.2.2099,)"
 )
 public class GooglyEyes
 {
