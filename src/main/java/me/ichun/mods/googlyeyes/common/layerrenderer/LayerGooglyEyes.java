@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
@@ -97,9 +97,9 @@ public class LayerGooglyEyes
                             GlStateManager.scale(0.75F, 0.75F, 0.75F);
                             GlStateManager.translate(0.0F, 10.0F * modelScale, 4.0F * modelScale);
                         }
-                        else if(model instanceof ModelHorse && living instanceof EntityHorse)
+                        else if(model instanceof ModelHorse && living instanceof AbstractHorse)
                         {
-                            float f1 = ((EntityHorse)living).getHorseSize();
+                            float f1 = ((AbstractHorse)living).getHorseSize();
 
                             GlStateManager.scale(f1, f1, f1);
                             GlStateManager.translate(0.0F, 1.35F * (1.0F - f1), 0.0F);
