@@ -1,5 +1,6 @@
 package me.ichun.mods.googlyeyes.common.helper;
 
+import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.monster.EntityGuardian;
 
 public class HelperGuardian extends HelperBase<EntityGuardian>
@@ -26,12 +27,12 @@ public class HelperGuardian extends HelperBase<EntityGuardian>
     @Override
     public float[] getIrisColours(EntityGuardian living, float partialTick, int eye)
     {
-        return living.isElder() ? irisColourElder : irisColour;
+        return living instanceof EntityElderGuardian ? irisColourElder : irisColour;
     }
 
     @Override
     public float[] getPupilColours(EntityGuardian living, float partialTick, int eye)
     {
-        return living.isElder() ? pupilColourElder : pupilColour;
+        return living instanceof EntityElderGuardian ? pupilColourElder : pupilColour;
     }
 }

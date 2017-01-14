@@ -15,7 +15,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import org.lwjgl.input.Keyboard;
 
 @SuppressWarnings("unchecked")
 public class LayerGooglyEyes

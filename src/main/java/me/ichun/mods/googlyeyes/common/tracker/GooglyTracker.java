@@ -3,9 +3,7 @@ package me.ichun.mods.googlyeyes.common.tracker;
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.googlyeyes.common.helper.HelperBase;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
-import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -84,7 +82,7 @@ public class GooglyTracker
             }
             else
             {
-                momentumY -= MathHelper.clamp_float(1F + deltaY, 0F, 0.1999F);
+                momentumY -= MathHelper.clamp(1F + deltaY, 0F, 0.1999F);
             }
 
             momentumX *= 0.95F;
@@ -100,13 +98,13 @@ public class GooglyTracker
             }
 
             float maxMomentum = 1.3F;
-            momentumX = MathHelper.clamp_float(momentumX, -maxMomentum, maxMomentum);
-            momentumY = MathHelper.clamp_float(momentumY, -maxMomentum, maxMomentum);
+            momentumX = MathHelper.clamp(momentumX, -maxMomentum, maxMomentum);
+            momentumY = MathHelper.clamp(momentumY, -maxMomentum, maxMomentum);
 
             deltaX += momentumX;
             deltaY += momentumY;
-            deltaX = MathHelper.clamp_float(deltaX, -1F, 1F);
-            deltaY = MathHelper.clamp_float(deltaY, -1F, 1F);
+            deltaX = MathHelper.clamp(deltaX, -1F, 1F);
+            deltaY = MathHelper.clamp(deltaY, -1F, 1F);
         }
     }
 
@@ -147,7 +145,7 @@ public class GooglyTracker
     public void requireUpdate()
     {
         shouldUpdate = true;
-        lastUpdateRequest = parent.worldObj.getWorldTime();
+        lastUpdateRequest = parent.world.getWorldTime();
     }
 
     public boolean shouldRender()

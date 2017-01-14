@@ -166,11 +166,13 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntityCow.class, new HelperBase().setHeadJoint(0F, -4F/16F, 8F/16F).setEyeOffset(0F, 1F/16F, 6F/16F).setHalfInterpupillaryDistance(3F / 16F));
         put(EntityCreeper.class, new HelperBase().setHeadJoint(0F, -6F/16F, 0F).setEyeOffset(0F, 5F/16F, 4F/16F)); //make creeper maaaaaaad with narrowing pupils
         put(EntityDragon.class, new HelperDragon());
+        put(EntityDonkey.class, new HelperHorse());
         put(EntityEnderman.class, new HelperEnderman());
         put(EntityEndermite.class, new HelperEndermite());
         put(EntityGhast.class, new HelperGhast());
         put(EntityGuardian.class, new HelperGuardian());
         put(EntityHorse.class, new HelperHorse());
+        put(EntityHusk.class, new HelperBase());
         put(EntityIronGolem.class, new HelperBase().setHeadJoint(0F, 7F/16F, 2F/16F).setEyeOffset(0F, 6F/16F, 5.5F/16F));
         put(EntityMagmaCube.class, new HelperMagmaCube());
         put(EntityMooshroom.class, new HelperBase().setHeadJoint(0F, -4F/16F, 8F/16F).setEyeOffset(0F, 1F/16F, 6F/16F).setHalfInterpupillaryDistance(3F / 16F));
@@ -183,15 +185,21 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntityShulker.class, new HelperShulker());
         put(EntitySilverfish.class, new HelperSilverfish());
         put(EntitySkeleton.class, new HelperBiped());
+        put(EntitySkeletonHorse.class, new HelperHorse());
+        put(EntityStray.class, new HelperBiped());
         put(EntitySlime.class, new HelperSlime());
         put(EntitySnowman.class, new HelperBase().setHeadJoint(0F, -4F/16F, 0F/16F).setEyeOffset(0F, 7.5F/16, 5F/16F).setHalfInterpupillaryDistance(1.5F / 16F).setEyeScale(1F));
         put(EntitySpider.class, new HelperSpider());
         put(EntitySquid.class, new HelperSquid());
         put(EntityVillager.class, new HelperBase().setEyeOffset(0F, 3.2F/16F, 4F/16F).setHalfInterpupillaryDistance(1.9F / 16F).setEyeScale(0.7F));
+        put(EntityVindicator.class, new HelperBase().setEyeOffset(0F, 3.2F/16F, 4F/16F).setHalfInterpupillaryDistance(1.9F / 16F).setEyeScale(0.7F));
+        put(EntityVex.class, new HelperBiped());
         put(EntityWitch.class, new HelperBase().setEyeOffset(0F, 3.2F/16F, 4F/16F).setHalfInterpupillaryDistance(1.9F / 16F).setEyeScale(0.7F));
         put(EntityWither.class, new HelperWither());
         put(EntityWolf.class, new HelperWolf());
-        put(EntityZombie.class, new HelperZombie());
+        put(EntityZombie.class, new HelperBase());
+        put(EntityZombieHorse.class, new HelperHorse());
+        put(EntityZombieVillager.class, new HelperBase().setEyeOffset(0F, 3.2F/16F, 4F/16F).setHalfInterpupillaryDistance(1.9F / 16F).setEyeScale(0.7F));
     }};
 
     @Nullable

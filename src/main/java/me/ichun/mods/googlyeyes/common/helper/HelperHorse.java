@@ -1,8 +1,8 @@
 package me.ichun.mods.googlyeyes.common.helper;
 
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 
-public class HelperHorse extends HelperBase<EntityHorse>
+public class HelperHorse extends HelperBase<AbstractHorse>
 {
     public HelperHorse()
     {
@@ -13,25 +13,25 @@ public class HelperHorse extends HelperBase<EntityHorse>
     }
 
     @Override
-    public float getHeadYaw(EntityHorse living, float partialTick, int eye)
+    public float getHeadYaw(AbstractHorse living, float partialTick, int eye)
     {
         return 180F;
     }
 
     @Override
-    public float getHeadPitch(EntityHorse living, float partialTick, int eye)
+    public float getHeadPitch(AbstractHorse living, float partialTick, int eye)
     {
         return (float)Math.toDegrees(living.getRearingAmount(partialTick) * ((float)Math.PI / 4F));
     }
 
     @Override
-    public float getHeadYawForTracker(EntityHorse living)
+    public float getHeadYawForTracker(AbstractHorse living)
     {
         return living.renderYawOffset;
     }
 
     @Override
-    public float getHeadPitchForTracker(EntityHorse living)
+    public float getHeadPitchForTracker(AbstractHorse living)
     {
         return (float)Math.toDegrees(living.getRearingAmount(1F) * ((float)Math.PI / 4F));
     }
