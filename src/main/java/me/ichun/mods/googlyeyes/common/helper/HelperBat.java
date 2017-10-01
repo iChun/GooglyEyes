@@ -4,7 +4,7 @@ import net.minecraft.entity.passive.EntityBat;
 
 public class HelperBat extends HelperBase<EntityBat>
 {
-    public float[] headJointFlying = new float[] { 0F, 0F, 0F }; //I love that I can use Tabula for this.
+    public float[] headJointFlying = new float[] { 0F, -1F/16F, 0F }; //I love that I can use Tabula for this.
 
     public HelperBat()
     {
@@ -34,7 +34,7 @@ public class HelperBat extends HelperBase<EntityBat>
         }
         else
         {
-            return new float[] { 0F, -1F/16F, 0F };
+            return headJointFlying;
         }
     }
 }

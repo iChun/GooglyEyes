@@ -2,7 +2,6 @@ package me.ichun.mods.googlyeyes.common.helper;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 
 public class HelperBiped extends HelperBase<EntityLivingBase>
 {

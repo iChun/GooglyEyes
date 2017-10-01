@@ -2,45 +2,24 @@ package me.ichun.mods.googlyeyes.common;
 
 import me.ichun.mods.googlyeyes.common.core.Config;
 import me.ichun.mods.googlyeyes.common.core.EventHandler;
-import me.ichun.mods.googlyeyes.common.helper.HelperBase;
-import me.ichun.mods.googlyeyes.common.layerrenderer.LayerGooglyEyes;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
-import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.renderer.entity.RenderZombie;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.entity.player.EntityPlayer;
+import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-@Mod(name = GooglyEyes.name, modid = GooglyEyes.modid, version = GooglyEyes.version,
+@Mod(name = GooglyEyes.MOD_NAME, modid = GooglyEyes.MOD_ID,
+        version = GooglyEyes.VERSION,
         clientSideOnly = true,
         acceptableRemoteVersions = "*",
-        dependencies = "required-after:Forge@[12.18.2.2099,)"
+        dependencies = "required-after:forge@[12.18.2.2099,)"
 )
 public class GooglyEyes
 {
-    public static final String version = "6.0.0";
+    public static final String VERSION = iChunUtil.VERSION_MAJOR + ".0.0";
 
-    public static final String name = "GooglyEyes";
-    public static final String modid = "googlyeyes";
+    public static final String MOD_NAME = "GooglyEyes";
+    public static final String MOD_ID = "googlyeyes";
 
     public static EventHandler eventHandler;
 

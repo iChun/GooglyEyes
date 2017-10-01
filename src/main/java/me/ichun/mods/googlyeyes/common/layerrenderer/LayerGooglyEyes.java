@@ -78,6 +78,11 @@ public class LayerGooglyEyes
                             GlStateManager.scale(0.75F, 0.75F, 0.75F);
                             GlStateManager.translate(0.0F, 16.0F * modelScale, 0.0F);
                         }
+                        else if(model instanceof ModelLlama)
+                        {
+                            GlStateManager.scale(0.625F, 0.45454544F, 0.45454544F);
+                            GlStateManager.translate(0.0F, 33.0F * modelScale, 0.0F);
+                        }
                         else if(model instanceof ModelQuadruped)
                         {
                             float childYOffset = ObfuscationReflectionHelper.getPrivateValue(ModelQuadruped.class, (ModelQuadruped)model, "field_78145_g", "childYOffset");

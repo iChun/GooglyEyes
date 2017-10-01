@@ -86,7 +86,7 @@ public class HelperBase<E extends EntityLivingBase>
 
     public float getPupilScale(E living, float partialTick, int eye)
     {
-        if(GooglyEyes.config.acidTripEyes == 1 || !living.getActivePotionEffects().isEmpty())
+        if(GooglyEyes.config.acidTripEyes == 1 || living.getDataManager().get(EntityLivingBase.POTION_EFFECTS) > 0)
         {
             livingRand.setSeed(Math.abs(living.hashCode()) * 1000);
             int eyeCount = getEyeCount(living);
@@ -159,6 +159,9 @@ public class HelperBase<E extends EntityLivingBase>
     }
 
     public static HashMap<Class<? extends EntityLivingBase>, HelperBase> modelOffsetHelpers = new HashMap<Class<? extends EntityLivingBase>, HelperBase>() {{
+        put(AbstractHorse.class, new HelperHorse());
+        put(AbstractIllager.class, new HelperBase().setEyeOffset(0F, 3.2F/16F, 4F/16F).setHalfInterpupillaryDistance(1.9F / 16F).setEyeScale(0.7F));
+        put(AbstractSkeleton.class, new HelperBiped());
         put(EntityPlayer.class, new HelperPlayer());
         put(EntityBat.class, new HelperBat());
         put(EntityBlaze.class, new HelperBase().setEyeOffset(0F, 0F, 4F/16F));
@@ -166,15 +169,17 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntityCow.class, new HelperBase().setHeadJoint(0F, -4F/16F, 8F/16F).setEyeOffset(0F, 1F/16F, 6F/16F).setHalfInterpupillaryDistance(3F / 16F));
         put(EntityCreeper.class, new HelperBase().setHeadJoint(0F, -6F/16F, 0F).setEyeOffset(0F, 5F/16F, 4F/16F)); //make creeper maaaaaaad with narrowing pupils
         put(EntityDragon.class, new HelperDragon());
+        put(EntityElderGuardian.class, new HelperElderGuardian());
         put(EntityEnderman.class, new HelperEnderman());
         put(EntityEndermite.class, new HelperEndermite());
         put(EntityGhast.class, new HelperGhast());
         put(EntityGuardian.class, new HelperGuardian());
-        put(EntityHorse.class, new HelperHorse());
         put(EntityIronGolem.class, new HelperBase().setHeadJoint(0F, 7F/16F, 2F/16F).setEyeOffset(0F, 6F/16F, 5.5F/16F));
+        put(EntityLlama.class, new HelperLlama());
         put(EntityMagmaCube.class, new HelperMagmaCube());
         put(EntityMooshroom.class, new HelperBase().setHeadJoint(0F, -4F/16F, 8F/16F).setEyeOffset(0F, 1F/16F, 6F/16F).setHalfInterpupillaryDistance(3F / 16F));
         put(EntityOcelot.class, new HelperOcelot());
+        put(EntityParrot.class, new HelperParrot());
         put(EntityPig.class, new HelperBase().setHeadJoint(0F, -12F/16F, 6F/16F).setEyeOffset(0F, 0.5F/16F, 8F/16F).setHalfInterpupillaryDistance(3F/16F));
         put(EntityPigZombie.class, new HelperPigZombie());
         put(EntityPolarBear.class, new HelperBase().setHeadJoint(0F, -10F/16F, 16F/16F).setEyeOffset(0F, -0.5F/16F, 3F/16F).setEyeScale(0.4F));
@@ -182,16 +187,17 @@ public class HelperBase<E extends EntityLivingBase>
         put(EntitySheep.class, new HelperSheep());
         put(EntityShulker.class, new HelperShulker());
         put(EntitySilverfish.class, new HelperSilverfish());
-        put(EntitySkeleton.class, new HelperBiped());
         put(EntitySlime.class, new HelperSlime());
         put(EntitySnowman.class, new HelperBase().setHeadJoint(0F, -4F/16F, 0F/16F).setEyeOffset(0F, 7.5F/16, 5F/16F).setHalfInterpupillaryDistance(1.5F / 16F).setEyeScale(1F));
         put(EntitySpider.class, new HelperSpider());
         put(EntitySquid.class, new HelperSquid());
+        put(EntityVex.class, new HelperBiped());
         put(EntityVillager.class, new HelperBase().setEyeOffset(0F, 3.2F/16F, 4F/16F).setHalfInterpupillaryDistance(1.9F / 16F).setEyeScale(0.7F));
         put(EntityWitch.class, new HelperBase().setEyeOffset(0F, 3.2F/16F, 4F/16F).setHalfInterpupillaryDistance(1.9F / 16F).setEyeScale(0.7F));
         put(EntityWither.class, new HelperWither());
         put(EntityWolf.class, new HelperWolf());
-        put(EntityZombie.class, new HelperZombie());
+        put(EntityZombie.class, new HelperBase());
+        put(EntityZombieVillager.class, new HelperBase().setEyeOffset(0F, 3.2F/16F, 4F/16F).setHalfInterpupillaryDistance(1.9F / 16F).setEyeScale(0.7F));
     }};
 
     @Nullable

@@ -8,15 +8,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.renderer.entity.RenderZombie;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -30,16 +26,17 @@ public class EventHandler
     @SubscribeEvent
     public void onWorldTick(TickEvent.ClientTickEvent event)
     {
+        GooglyEyes.config.googlyEyeChance = 100; //TODO remove this later.
         if(event.phase == TickEvent.Phase.END)
         {
-            if(Minecraft.getMinecraft().theWorld != null && !Minecraft.getMinecraft().isGamePaused())
+            if(Minecraft.getMinecraft().world != null && !Minecraft.getMinecraft().isGamePaused())
             {
                 Iterator<Map.Entry<EntityLivingBase, GooglyTracker>> ite = trackers.entrySet().iterator();
                 while(ite.hasNext())
                 {
                     Map.Entry<EntityLivingBase, GooglyTracker> e = ite.next();
                     GooglyTracker tracker = e.getValue();
-                    if(tracker.parent.worldObj.getWorldTime() - tracker.lastUpdateRequest > 3) //If the tracker hasn't been updated for 3 ticks, assume the entity has despawned
+                    if(tracker.parent.getEntityWorld().getWorldTime() - tracker.lastUpdateRequest > 3) //TODO change this to iChunUtil //If the tracker hasn't been updated for 3 ticks, assume the entity has despawned
                     {
                         ite.remove();
                     }
@@ -60,7 +57,7 @@ public class EventHandler
         {
             Map.Entry<EntityLivingBase, GooglyTracker> e = ite.next();
             GooglyTracker tracker = e.getValue();
-            if(tracker.parent.worldObj == event.getWorld())
+            if(tracker.parent.getEntityWorld() == event.getWorld())
             {
                 ite.remove();
             }
@@ -97,86 +94,50 @@ public class EventHandler
                     addedRenderers.add(e.getValue());
                 }
             }
-            ArrayList<RenderLivingBase> renderLivingBases = new ArrayList<>();
+
             for(Map.Entry< Class <? extends Entity> , Render<? extends Entity >> entry : Minecraft.getMinecraft().getRenderManager().entityRenderMap.entrySet())
             {
-                if(entry.getValue() instanceof RenderLivingBase && !renderLivingBases.contains(entry.getValue()))
-                {
-                    renderLivingBases.add((RenderLivingBase)entry.getValue());
-                }
-            }
-            for(Map.Entry<Class<? extends EntityLivingBase>, HelperBase> e : HelperBase.modelOffsetHelpers.entrySet())
-            {
-                boolean addLayer = true;
-                Class<? extends EntityLivingBase> clz = e.getKey();
-                if(clz == EntityPlayer.class)
+                if(EntityPlayer.class.isAssignableFrom(entry.getKey()))
                 {
                     continue;
                 }
-                String entName = EntityList.getEntityStringFromClass(clz);
-                for(String s : GooglyEyes.config.disabledGoogly)
+                if(EntityLivingBase.class.isAssignableFrom(entry.getKey()) && RenderLivingBase.class.isAssignableFrom(entry.getValue().getClass())) //is a living entity with a living entity renderer
                 {
-                    if(s.equalsIgnoreCase(entName))
+                    boolean addLayer = true;
+                    net.minecraftforge.fml.common.registry.EntityEntry entEntry = net.minecraftforge.fml.common.registry.EntityRegistry.getEntry(entry.getKey());
+                    if(entEntry != null)
                     {
-                        addLayer = false;
-                        break;
-                    }
-                }
-                if(addLayer)
-                {
-                    Render render = Minecraft.getMinecraft().getRenderManager().getEntityClassRenderObject(clz);
-                    if(render instanceof RenderLivingBase)
-                    {
-                        RenderLivingBase renderLiving = (RenderLivingBase)render;
-                        addGooglyLayer(renderLiving, layerGooglyEyes);
-
-                        for(RenderLivingBase render1 : renderLivingBases)
+                        String entName = entEntry.getName();
+                        for(String s : GooglyEyes.config.disabledGoogly)
                         {
-                            if(render != render1 && render.getClass().isInstance(render1) && !addedRenderers.contains(render1))
+                            if(s.equalsIgnoreCase(entName))
                             {
-                                addLayer = true;
-
-                                entName = EntityList.getEntityStringFromClass(clz);
-                                for(String s : GooglyEyes.config.disabledGoogly)
-                                {
-                                    if(s.equalsIgnoreCase(entName))
-                                    {
-                                        addLayer = false;
-                                        break;
-                                    }
-                                }
-                                if(addLayer)
-                                {
-                                    addGooglyLayer(render1, layerGooglyEyes);
-                                }
+                                addLayer = false;
+                                break;
                             }
                         }
                     }
-                    else
+                    if(addLayer)
                     {
-                        //TODO LOGGER
-                        System.out.println("ASDLKHASKLDHKLASJDLKASJDLKJ SOMETHING WRONG: " + entName);
+                        for(Map.Entry<Class<? extends EntityLivingBase>, HelperBase> e : HelperBase.modelOffsetHelpers.entrySet())
+                        {
+                            if(e.getKey().isAssignableFrom(entry.getKey()))
+                            {
+                                RenderLivingBase renderLiving = (RenderLivingBase)entry.getValue();
+                                addGooglyLayer(renderLiving, layerGooglyEyes);
+                                break;
+                            }
+                        }
                     }
                 }
             }
-
         }
     }
 
     public void addGooglyLayer(RenderLivingBase render, LayerGooglyEyes layerGooglyEyes)
     {
         render.addLayer(layerGooglyEyes);
-
-        //ZOMBIE WORKAROUND
-        if(render instanceof RenderZombie)
-        {
-            List<LayerRenderer> zombieLayers = ObfuscationReflectionHelper.getPrivateValue(RenderZombie.class, (RenderZombie)render, "field_177122_o", "defaultLayers"); //TODO AT THIS OUT IN ICHUNUTIL
-            List<LayerRenderer> villagerLayers = ObfuscationReflectionHelper.getPrivateValue(RenderZombie.class, (RenderZombie)render, "field_177121_n", "villagerLayers"); //TODO AT THIS OUT IN ICHUNUTIL
-            zombieLayers.add(layerGooglyEyes);
-            villagerLayers.add(layerGooglyEyes);
-        }
     }
-
 
     public GooglyTracker getGooglyTracker(EntityLivingBase living, HelperBase helper)
     {
