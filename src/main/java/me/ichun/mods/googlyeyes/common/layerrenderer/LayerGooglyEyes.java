@@ -1,7 +1,7 @@
 package me.ichun.mods.googlyeyes.common.layerrenderer;
 
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
-import me.ichun.mods.googlyeyes.common.helper.HelperBase;
+import me.ichun.mods.ichunutil.client.entity.head.HeadBase;
 import me.ichun.mods.googlyeyes.common.model.ModelGooglyEye;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
 import net.minecraft.client.Minecraft;
@@ -15,7 +15,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import org.lwjgl.input.Keyboard;
 
 @SuppressWarnings("unchecked")
 public class LayerGooglyEyes
@@ -34,9 +33,22 @@ public class LayerGooglyEyes
     @Override
     public void doRenderLayer(EntityLivingBase living, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-        HelperBase helper = HelperBase.getHelperBase(living.getClass());
+        HeadBase helper = HeadBase.getHelperBase(living.getClass());
         if(helper != null)
         {
+            Render render = Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(living);
+            if(!(render instanceof RenderLivingBase))
+            {
+                return;
+            }
+            RenderLivingBase renderer = (RenderLivingBase)render;
+            HeadBase.setHeadModel(helper, renderer);
+            if(helper.headModel == null)
+            {
+                System.out.println("UH OH WE HAVE A PROBLEM");
+                return;
+            }
+
             GooglyTracker tracker = GooglyEyes.eventHandler.getGooglyTracker(living, helper);
             if(!tracker.shouldRender())
             {
@@ -66,52 +78,7 @@ public class LayerGooglyEyes
                 GlStateManager.pushMatrix();
 
                 // thepatcat: Creatures only get googly eyes in adulthood. It's science.
-                if(living.isChild()) //I don't like this if statement any more than you do.
-                {
-                    Render render = Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(living);
-                    if(render instanceof RenderLivingBase)
-                    {
-                        float modelScale = 0.0625F;
-                        ModelBase model = ((RenderLivingBase)render).getMainModel();
-                        if(model instanceof ModelBiped)
-                        {
-                            GlStateManager.scale(0.75F, 0.75F, 0.75F);
-                            GlStateManager.translate(0.0F, 16.0F * modelScale, 0.0F);
-                        }
-                        else if(model instanceof ModelLlama)
-                        {
-                            GlStateManager.scale(0.625F, 0.45454544F, 0.45454544F);
-                            GlStateManager.translate(0.0F, 33.0F * modelScale, 0.0F);
-                        }
-                        else if(model instanceof ModelQuadruped)
-                        {
-                            float childYOffset = ObfuscationReflectionHelper.getPrivateValue(ModelQuadruped.class, (ModelQuadruped)model, "field_78145_g", "childYOffset");
-                            float childZOffset = ObfuscationReflectionHelper.getPrivateValue(ModelQuadruped.class, (ModelQuadruped)model, "field_78151_h", "childZOffset");
-
-                            if(model instanceof ModelPolarBear)
-                            {
-                                GlStateManager.scale(0.6666667F, 0.6666667F, 0.6666667F);
-                            }
-                            GlStateManager.translate(0.0F, childYOffset * modelScale, childZOffset * modelScale);
-                        }
-                        else if(model instanceof ModelChicken || model instanceof ModelWolf)
-                        {
-                            GlStateManager.translate(0.0F, 5.0F * modelScale, 2.0F * modelScale);
-                        }
-                        else if(model instanceof ModelOcelot)
-                        {
-                            GlStateManager.scale(0.75F, 0.75F, 0.75F);
-                            GlStateManager.translate(0.0F, 10.0F * modelScale, 4.0F * modelScale);
-                        }
-                        else if(model instanceof ModelHorse && living instanceof EntityHorse)
-                        {
-                            float f1 = ((EntityHorse)living).getHorseSize();
-
-                            GlStateManager.scale(f1, f1, f1);
-                            GlStateManager.translate(0.0F, 1.35F * (1.0F - f1), 0.0F);
-                        }
-                    }
-                }
+                HeadBase.preChildHeadRenderCalls(living, renderer);
 
                 float[] joint = helper.getHeadJointOffset(living, partialTicks, i);
                 GlStateManager.translate(-joint[0], -joint[1], -joint[2]);

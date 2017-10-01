@@ -1,7 +1,8 @@
 package me.ichun.mods.googlyeyes.common.core;
 
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
-import me.ichun.mods.googlyeyes.common.helper.HelperBase;
+import me.ichun.mods.ichunutil.client.core.event.RendererSafeCompatibilityEvent;
+import me.ichun.mods.ichunutil.client.entity.head.HeadBase;
 import me.ichun.mods.googlyeyes.common.layerrenderer.LayerGooglyEyes;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
 import net.minecraft.client.Minecraft;
@@ -66,67 +67,61 @@ public class EventHandler
 
     @SuppressWarnings("unchecked")
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onInitGuiPost(GuiScreenEvent.InitGuiEvent.Post event)
+    public void onRendererSafeCompatibilityEvent(RendererSafeCompatibilityEvent event)
     {
-        //TODO switch this over to the render-safe event in iChunUtil
-        if(!hasShownFirstGui)
+        LayerGooglyEyes layerGooglyEyes = new LayerGooglyEyes(Minecraft.getMinecraft().getTextureManager());
+        ArrayList<RenderLivingBase> addedRenderers = new ArrayList<>();
+
+        boolean doPlayer = true;
+        for(String s : GooglyEyes.config.disabledGoogly)
         {
-            hasShownFirstGui = true;
-
-            LayerGooglyEyes layerGooglyEyes = new LayerGooglyEyes(Minecraft.getMinecraft().getTextureManager());
-            ArrayList<RenderLivingBase> addedRenderers = new ArrayList<>();
-
-            boolean doPlayer = true;
-            for(String s : GooglyEyes.config.disabledGoogly)
+            if(s.equalsIgnoreCase("player"))
             {
-                if(s.equalsIgnoreCase("player"))
-                {
-                    doPlayer = false;
-                    break;
-                }
+                doPlayer = false;
+                break;
             }
-            if(doPlayer)
+        }
+        if(doPlayer)
+        {
+            Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
+            for(Map.Entry<String, RenderPlayer> e : skinMap.entrySet())
             {
-                Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
-                for(Map.Entry<String, RenderPlayer> e : skinMap.entrySet())
-                {
-                    e.getValue().addLayer(layerGooglyEyes);
-                    addedRenderers.add(e.getValue());
-                }
+                e.getValue().addLayer(layerGooglyEyes);
+                addedRenderers.add(e.getValue());
             }
+        }
 
-            for(Map.Entry< Class <? extends Entity> , Render<? extends Entity >> entry : Minecraft.getMinecraft().getRenderManager().entityRenderMap.entrySet())
+        for(Map.Entry< Class <? extends Entity> , Render<? extends Entity >> entry : Minecraft.getMinecraft().getRenderManager().entityRenderMap.entrySet())
+        {
+            if(EntityPlayer.class.isAssignableFrom(entry.getKey()))
             {
-                if(EntityPlayer.class.isAssignableFrom(entry.getKey()))
+                continue;
+            }
+            if(EntityLivingBase.class.isAssignableFrom(entry.getKey()) && RenderLivingBase.class.isAssignableFrom(entry.getValue().getClass())) //is a living entity with a living entity renderer
+            {
+                boolean addLayer = true;
+                net.minecraftforge.fml.common.registry.EntityEntry entEntry = net.minecraftforge.fml.common.registry.EntityRegistry.getEntry(entry.getKey());
+                if(entEntry != null)
                 {
-                    continue;
-                }
-                if(EntityLivingBase.class.isAssignableFrom(entry.getKey()) && RenderLivingBase.class.isAssignableFrom(entry.getValue().getClass())) //is a living entity with a living entity renderer
-                {
-                    boolean addLayer = true;
-                    net.minecraftforge.fml.common.registry.EntityEntry entEntry = net.minecraftforge.fml.common.registry.EntityRegistry.getEntry(entry.getKey());
-                    if(entEntry != null)
+                    String entName = entEntry.getName();
+                    for(String s : GooglyEyes.config.disabledGoogly)
                     {
-                        String entName = entEntry.getName();
-                        for(String s : GooglyEyes.config.disabledGoogly)
+                        if(s.equalsIgnoreCase(entName))
                         {
-                            if(s.equalsIgnoreCase(entName))
-                            {
-                                addLayer = false;
-                                break;
-                            }
+                            addLayer = false;
+                            break;
                         }
                     }
-                    if(addLayer)
+                }
+                if(addLayer)
+                {
+                    for(Map.Entry<Class<? extends EntityLivingBase>, HeadBase> e : HeadBase.modelOffsetHelpers.entrySet())
                     {
-                        for(Map.Entry<Class<? extends EntityLivingBase>, HelperBase> e : HelperBase.modelOffsetHelpers.entrySet())
+                        if(e.getKey().isAssignableFrom(entry.getKey()))
                         {
-                            if(e.getKey().isAssignableFrom(entry.getKey()))
-                            {
-                                RenderLivingBase renderLiving = (RenderLivingBase)entry.getValue();
-                                addGooglyLayer(renderLiving, layerGooglyEyes);
-                                break;
-                            }
+                            RenderLivingBase renderLiving = (RenderLivingBase)entry.getValue();
+                            addGooglyLayer(renderLiving, layerGooglyEyes);
+                            break;
                         }
                     }
                 }
@@ -139,7 +134,7 @@ public class EventHandler
         render.addLayer(layerGooglyEyes);
     }
 
-    public GooglyTracker getGooglyTracker(EntityLivingBase living, HelperBase helper)
+    public GooglyTracker getGooglyTracker(EntityLivingBase living, HeadBase helper)
     {
         GooglyTracker tracker = trackers.get(living);
         if(tracker == null)

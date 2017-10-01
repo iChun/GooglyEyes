@@ -1,11 +1,9 @@
 package me.ichun.mods.googlyeyes.common.tracker;
 
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
-import me.ichun.mods.googlyeyes.common.helper.HelperBase;
+import me.ichun.mods.ichunutil.client.entity.head.HeadBase;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
-import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -13,7 +11,7 @@ import java.util.Random;
 public class GooglyTracker
 {
     public final EntityLivingBase parent;
-    public final HelperBase helper;
+    public final HeadBase helper;
     public final Random rand;
     public final float renderChance;
 
@@ -32,6 +30,8 @@ public class GooglyTracker
         public float rotationYaw;
         public float prevRotationPitch;
         public float rotationPitch;
+        public float prevRotationRoll;
+        public float rotationRoll;
 
         //Deltas are capped to -1 to 1
         public float prevDeltaX;
@@ -50,9 +50,11 @@ public class GooglyTracker
         {
             prevRotationYaw = rotationYaw;
             prevRotationPitch = rotationPitch;
+            prevRotationRoll = rotationRoll;
 
             rotationYaw = helper.getHeadYawForTracker(parent.parent, eye);
             rotationPitch = helper.getHeadPitchForTracker(parent.parent, eye);
+            rotationRoll = helper.getHeadRollForTracker(parent.parent, eye);
 
             prevDeltaX = deltaX;
             prevDeltaY = deltaY;
@@ -60,9 +62,10 @@ public class GooglyTracker
             //calculate momentums
             float yawDiff = rotationYaw - prevRotationYaw;
             float pitchDiff = rotationPitch - prevRotationPitch;
+            float rollDiff = rotationRoll - prevRotationRoll;
 
-            momentumY += motionY * 1.5F + (motionX + motionZ) * rand.nextGaussian() * (0.75F) + (pitchDiff / 45F) + (yawDiff / 180F);
-            momentumX -= (motionX + motionZ) * rand.nextGaussian() * 0.4F + (yawDiff / 45F);
+            momentumY += motionY * 1.5F + (motionX + motionZ) * rand.nextGaussian() * (0.75F) + (pitchDiff / 45F) + (yawDiff / 180F) + rollDiff * rand.nextGaussian() * (0.05F);
+            momentumX -= (motionX + motionZ) * rand.nextGaussian() * 0.4F + (yawDiff / 45F) + rollDiff * rand.nextGaussian() * (0.05F);
 
             //Physics based!
             float momentumLoss = 0.9F;
@@ -111,7 +114,7 @@ public class GooglyTracker
     }
 
 
-    public GooglyTracker(@Nonnull EntityLivingBase parent, @Nonnull HelperBase helper)
+    public GooglyTracker(@Nonnull EntityLivingBase parent, @Nonnull HeadBase helper)
     {
         this.parent = parent;
         this.helper = helper;

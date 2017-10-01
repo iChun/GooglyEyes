@@ -2,17 +2,22 @@ package me.ichun.mods.googlyeyes.common;
 
 import me.ichun.mods.googlyeyes.common.core.Config;
 import me.ichun.mods.googlyeyes.common.core.EventHandler;
+import me.ichun.mods.ichunutil.client.entity.head.HeadBase;
+import me.ichun.mods.ichunutil.common.core.config.ConfigHandler;
 import me.ichun.mods.ichunutil.common.iChunUtil;
+import me.ichun.mods.ichunutil.common.module.update.UpdateChecker;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
+import java.util.function.BooleanSupplier;
 
 @Mod(name = GooglyEyes.MOD_NAME, modid = GooglyEyes.MOD_ID,
         version = GooglyEyes.VERSION,
         clientSideOnly = true,
         acceptableRemoteVersions = "*",
-        dependencies = "required-after:forge@[12.18.2.2099,)"
+        guiFactory = "me.ichun.mods.ichunutil.common.core.config.GenericModGuiFactory",
+        dependencies = "required-after:ichunutil@[" + iChunUtil.VERSION_MAJOR +".0.0," + (iChunUtil.VERSION_MAJOR + 1) + ".0.0)"
 )
 public class GooglyEyes
 {
@@ -24,24 +29,19 @@ public class GooglyEyes
     public static EventHandler eventHandler;
 
     public static Config config;
+    public static BooleanSupplier oldAcidEyesBooleanSupplier;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        Configuration config = new Configuration(event.getSuggestedConfigurationFile());
-        config.load();
-
-        GooglyEyes.config = new Config();
-        GooglyEyes.config.disabledGoogly = config.getStringList("disabledGoogly", "general", GooglyEyes.config.disabledGoogly, "To disable Googly Eyes on a specific entity, put their registry name in here.\nFor Players, put \"player\"");
-        GooglyEyes.config.acidTripEyes = config.getInt("acidTripEyes", "general", GooglyEyes.config.acidTripEyes, 0, 1, "Let them googly eyes be trippin'");
-        GooglyEyes.config.googlyEyeChance = config.getInt("googlyEyeChance", "general", GooglyEyes.config.googlyEyeChance, 0, 100, "Googly Eye chance (in %)");
-
-        if(config.hasChanged())
-        {
-            config.save();
-        }
+        config = ConfigHandler.registerConfig(new Config(event.getSuggestedConfigurationFile()));
 
         eventHandler = new EventHandler();
         MinecraftForge.EVENT_BUS.register(eventHandler);
+
+        UpdateChecker.registerMod(new UpdateChecker.ModVersionInfo(MOD_NAME, iChunUtil.VERSION_OF_MC, VERSION, true));
+
+        oldAcidEyesBooleanSupplier = HeadBase.acidEyesBooleanSupplier;
+        HeadBase.acidEyesBooleanSupplier = () -> (GooglyEyes.config.acidTripEyes == 1 || oldAcidEyesBooleanSupplier.getAsBoolean());
     }
 }
