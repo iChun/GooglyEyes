@@ -17,11 +17,12 @@ import java.util.function.BooleanSupplier;
         clientSideOnly = true,
         acceptableRemoteVersions = "*",
         guiFactory = "me.ichun.mods.ichunutil.common.core.config.GenericModGuiFactory",
-        dependencies = "required-after:ichunutil@[" + iChunUtil.VERSION_MAJOR +".0.0," + (iChunUtil.VERSION_MAJOR + 1) + ".0.0)"
+        dependencies = "required-after:ichunutil@[" + iChunUtil.VERSION_MAJOR +".0.1," + (iChunUtil.VERSION_MAJOR + 1) + ".0.0)",
+        acceptedMinecraftVersions = iChunUtil.MC_VERSION_RANGE
 )
 public class GooglyEyes
 {
-    public static final String VERSION = iChunUtil.VERSION_MAJOR + ".0.0";
+    public static final String VERSION = iChunUtil.VERSION_MAJOR + ".0.1";
 
     public static final String MOD_NAME = "GooglyEyes";
     public static final String MOD_ID = "googlyeyes";
