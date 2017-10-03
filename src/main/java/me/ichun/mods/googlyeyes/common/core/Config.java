@@ -10,14 +10,14 @@ import java.io.File;
 
 public class Config extends ConfigBase
 {
-    @ConfigProp(category = "general")
+    @ConfigProp(changeable = false)
     public String[] disabledGoogly = new String[0];
 
-    @ConfigProp(category = "general")
+    @ConfigProp
     @IntBool
     public int acidTripEyes = 0;
 
-    @ConfigProp(category = "general")
+    @ConfigProp
     @IntMinMax(min = 0, max = 100)
     public int googlyEyeChance = 20; //default 20%
 
@@ -35,6 +35,6 @@ public class Config extends ConfigBase
     @Override
     public String getModName()
     {
-        return GooglyEyes.MOD_NAME;
+        return "Googly Eyes";
     }
 }

@@ -5,6 +5,7 @@ import me.ichun.mods.ichunutil.client.core.event.RendererSafeCompatibilityEvent;
 import me.ichun.mods.ichunutil.client.entity.head.HeadBase;
 import me.ichun.mods.googlyeyes.common.layerrenderer.LayerGooglyEyes;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
+import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
@@ -37,7 +38,7 @@ public class EventHandler
                 {
                     Map.Entry<EntityLivingBase, GooglyTracker> e = ite.next();
                     GooglyTracker tracker = e.getValue();
-                    if(tracker.parent.getEntityWorld().getWorldTime() - tracker.lastUpdateRequest > 3) //TODO change this to iChunUtil //If the tracker hasn't been updated for 3 ticks, assume the entity has despawned
+                    if(iChunUtil.eventHandlerClient.ticks - tracker.lastUpdateRequest > 3) //TODO change this to iChunUtil //If the tracker hasn't been updated for 3 ticks, assume the entity has despawned
                     {
                         ite.remove();
                     }

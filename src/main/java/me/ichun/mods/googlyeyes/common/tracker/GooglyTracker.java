@@ -2,6 +2,7 @@ package me.ichun.mods.googlyeyes.common.tracker;
 
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.ichunutil.client.entity.head.HeadBase;
+import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
 
@@ -150,7 +151,7 @@ public class GooglyTracker
     public void requireUpdate()
     {
         shouldUpdate = true;
-        lastUpdateRequest = parent.getEntityWorld().getWorldTime(); //TODO change this over to tick time in iChunUtil
+        lastUpdateRequest = iChunUtil.eventHandlerClient.ticks;
     }
 
     public boolean shouldRender()
