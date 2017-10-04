@@ -45,7 +45,6 @@ public class LayerGooglyEyes
             HeadBase.setHeadModel(helper, renderer);
             if(helper.headModel == null)
             {
-                System.out.println("UH OH WE HAVE A PROBLEM");
                 return;
             }
 

@@ -23,12 +23,9 @@ import java.util.*;
 
 public class EventHandler
 {
-    private boolean hasShownFirstGui = false;
-
     @SubscribeEvent
     public void onWorldTick(TickEvent.ClientTickEvent event)
     {
-        GooglyEyes.config.googlyEyeChance = 100; //TODO remove this later.
         if(event.phase == TickEvent.Phase.END)
         {
             if(Minecraft.getMinecraft().world != null && !Minecraft.getMinecraft().isGamePaused())
@@ -38,7 +35,7 @@ public class EventHandler
                 {
                     Map.Entry<EntityLivingBase, GooglyTracker> e = ite.next();
                     GooglyTracker tracker = e.getValue();
-                    if(iChunUtil.eventHandlerClient.ticks - tracker.lastUpdateRequest > 3) //TODO change this to iChunUtil //If the tracker hasn't been updated for 3 ticks, assume the entity has despawned
+                    if(iChunUtil.eventHandlerClient.ticks - tracker.lastUpdateRequest > 3)
                     {
                         ite.remove();
                     }
