@@ -35,7 +35,7 @@ public class EventHandler
                 {
                     Map.Entry<EntityLivingBase, GooglyTracker> e = ite.next();
                     GooglyTracker tracker = e.getValue();
-                    if(iChunUtil.eventHandlerClient.ticks - tracker.lastUpdateRequest > 3)
+                    if(iChunUtil.eventHandlerClient.ticks - tracker.lastUpdateRequest > 10)
                     {
                         ite.remove();
                     }
@@ -51,14 +51,17 @@ public class EventHandler
     @SubscribeEvent
     public void onWorldUnload(WorldEvent.Unload event)
     {
-        Iterator<Map.Entry<EntityLivingBase, GooglyTracker>> ite = trackers.entrySet().iterator();
-        while(ite.hasNext())
+        if(event.getWorld().isRemote)
         {
-            Map.Entry<EntityLivingBase, GooglyTracker> e = ite.next();
-            GooglyTracker tracker = e.getValue();
-            if(tracker.parent.getEntityWorld() == event.getWorld())
+            Iterator<Map.Entry<EntityLivingBase, GooglyTracker>> ite = trackers.entrySet().iterator();
+            while(ite.hasNext())
             {
-                ite.remove();
+                Map.Entry<EntityLivingBase, GooglyTracker> e = ite.next();
+                GooglyTracker tracker = e.getValue();
+                if(tracker.parent.getEntityWorld() == event.getWorld())
+                {
+                    ite.remove();
+                }
             }
         }
     }
