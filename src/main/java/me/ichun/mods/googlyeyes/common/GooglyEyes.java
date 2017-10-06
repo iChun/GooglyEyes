@@ -16,13 +16,13 @@ import java.util.function.BooleanSupplier;
         version = GooglyEyes.VERSION,
         clientSideOnly = true,
         acceptableRemoteVersions = "*",
-        guiFactory = "me.ichun.mods.ichunutil.common.core.config.GenericModGuiFactory",
-        dependencies = "required-after:ichunutil@[" + iChunUtil.VERSION_MAJOR +".0.1," + (iChunUtil.VERSION_MAJOR + 1) + ".0.0)",
+        guiFactory = iChunUtil.GUI_CONFIG_FACTORY,
+        dependencies = "required-after:ichunutil@[" + iChunUtil.VERSION_MAJOR +".0.2," + (iChunUtil.VERSION_MAJOR + 1) + ".0.0)",
         acceptedMinecraftVersions = iChunUtil.MC_VERSION_RANGE
 )
 public class GooglyEyes
 {
-    public static final String VERSION = iChunUtil.VERSION_MAJOR + ".0.1";
+    public static final String VERSION = iChunUtil.VERSION_MAJOR + ".0.2";
 
     public static final String MOD_NAME = "GooglyEyes";
     public static final String MOD_ID = "googlyeyes";
@@ -44,5 +44,7 @@ public class GooglyEyes
 
         oldAcidEyesBooleanSupplier = HeadBase.acidEyesBooleanSupplier;
         HeadBase.acidEyesBooleanSupplier = () -> (GooglyEyes.config.acidTripEyes == 1 || oldAcidEyesBooleanSupplier.getAsBoolean());
+
+        iChunUtil.config.reveal("aggressiveHeadTracking");
     }
 }

@@ -7,6 +7,7 @@ import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -57,6 +58,7 @@ public class LayerGooglyEyes
 
             int eyeCount = helper.getEyeCount(living);
 
+            GlStateManager.enableNormalize();
             GlStateManager.enableDepth();
             GlStateManager.depthMask(true);
 
