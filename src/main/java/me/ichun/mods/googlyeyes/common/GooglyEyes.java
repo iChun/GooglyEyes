@@ -30,7 +30,6 @@ public class GooglyEyes
     public static EventHandler eventHandler;
 
     public static Config config;
-    public static BooleanSupplier oldAcidEyesBooleanSupplier;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -42,7 +41,7 @@ public class GooglyEyes
 
         UpdateChecker.registerMod(new UpdateChecker.ModVersionInfo(MOD_NAME, iChunUtil.VERSION_OF_MC, VERSION, true));
 
-        oldAcidEyesBooleanSupplier = HeadBase.acidEyesBooleanSupplier;
+        BooleanSupplier oldAcidEyesBooleanSupplier = HeadBase.acidEyesBooleanSupplier;
         HeadBase.acidEyesBooleanSupplier = () -> (GooglyEyes.config.acidTripEyes == 1 || oldAcidEyesBooleanSupplier.getAsBoolean());
 
         iChunUtil.config.reveal("aggressiveHeadTracking");
