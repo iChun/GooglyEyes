@@ -1,10 +1,11 @@
 package me.ichun.mods.googlyeyes.common.core;
 
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
-import me.ichun.mods.ichunutil.client.core.event.RendererSafeCompatibilityEvent;
-import me.ichun.mods.ichunutil.client.entity.head.HeadBase;
 import me.ichun.mods.googlyeyes.common.layerrenderer.LayerGooglyEyes;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
+import me.ichun.mods.ichunutil.api.client.head.HeadBase;
+import me.ichun.mods.ichunutil.client.core.event.RendererSafeCompatibilityEvent;
+import me.ichun.mods.ichunutil.client.entity.head.HeadHandler;
 import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
@@ -13,13 +14,15 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 public class EventHandler
 {
@@ -116,7 +119,7 @@ public class EventHandler
                 }
                 if(addLayer)
                 {
-                    for(Map.Entry<Class<? extends EntityLivingBase>, HeadBase> e : HeadBase.modelOffsetHelpers.entrySet())
+                    for(Map.Entry<Class<? extends EntityLivingBase>, HeadBase> e : HeadHandler.modelOffsetHelpers.entrySet())
                     {
                         if(e.getKey().isAssignableFrom(entry.getKey()))
                         {

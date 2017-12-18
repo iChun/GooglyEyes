@@ -1,21 +1,18 @@
 package me.ichun.mods.googlyeyes.common.layerrenderer;
 
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
-import me.ichun.mods.ichunutil.client.entity.head.HeadBase;
 import me.ichun.mods.googlyeyes.common.model.ModelGooglyEye;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
+import me.ichun.mods.ichunutil.api.client.head.HeadBase;
+import me.ichun.mods.ichunutil.client.entity.head.HeadHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 @SuppressWarnings("unchecked")
 public class LayerGooglyEyes
@@ -34,7 +31,7 @@ public class LayerGooglyEyes
     @Override
     public void doRenderLayer(EntityLivingBase living, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-        HeadBase helper = HeadBase.getHelperBase(living.getClass());
+        HeadBase helper = HeadHandler.getHelperBase(living.getClass());
         if(helper != null)
         {
             Render render = Minecraft.getMinecraft().getRenderManager().getEntityRenderObject(living);
@@ -43,7 +40,7 @@ public class LayerGooglyEyes
                 return;
             }
             RenderLivingBase renderer = (RenderLivingBase)render;
-            HeadBase.setHeadModel(helper, renderer);
+            HeadHandler.setHeadModel(helper, renderer);
             if(helper.headModel == null)
             {
                 return;
@@ -79,7 +76,7 @@ public class LayerGooglyEyes
                 GlStateManager.pushMatrix();
 
                 // thepatcat: Creatures only get googly eyes in adulthood. It's science.
-                HeadBase.preChildHeadRenderCalls(living, renderer);
+                helper.preChildEntHeadRenderCalls(living, renderer);
 
                 float[] joint = helper.getHeadJointOffset(living, partialTicks, i);
                 GlStateManager.translate(-joint[0], -joint[1], -joint[2]);

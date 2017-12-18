@@ -1,7 +1,7 @@
 package me.ichun.mods.googlyeyes.common.tracker;
 
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
-import me.ichun.mods.ichunutil.client.entity.head.HeadBase;
+import me.ichun.mods.ichunutil.api.client.head.HeadBase;
 import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
@@ -53,9 +53,9 @@ public class GooglyTracker
             prevRotationPitch = rotationPitch;
             prevRotationRoll = rotationRoll;
 
-            rotationYaw = helper.getHeadYawForTracker(parent.parent, eye);
-            rotationPitch = helper.getHeadPitchForTracker(parent.parent, eye);
-            rotationRoll = helper.getHeadRollForTracker(parent.parent, eye);
+            rotationYaw = helper.getHeadYaw(parent.parent, 1F, eye);
+            rotationPitch = helper.getHeadPitch(parent.parent, 1F, eye);
+            rotationRoll = helper.getHeadRoll(parent.parent, 1F, eye);
 
             prevDeltaX = deltaX;
             prevDeltaY = deltaY;

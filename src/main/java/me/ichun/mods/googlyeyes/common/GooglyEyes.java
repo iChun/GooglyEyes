@@ -2,7 +2,7 @@ package me.ichun.mods.googlyeyes.common;
 
 import me.ichun.mods.googlyeyes.common.core.Config;
 import me.ichun.mods.googlyeyes.common.core.EventHandler;
-import me.ichun.mods.ichunutil.client.entity.head.HeadBase;
+import me.ichun.mods.ichunutil.api.client.head.HeadBase;
 import me.ichun.mods.ichunutil.common.core.config.ConfigHandler;
 import me.ichun.mods.ichunutil.common.iChunUtil;
 import me.ichun.mods.ichunutil.common.module.update.UpdateChecker;
@@ -17,7 +17,7 @@ import java.util.function.BooleanSupplier;
         clientSideOnly = true,
         acceptableRemoteVersions = "*",
         guiFactory = iChunUtil.GUI_CONFIG_FACTORY,
-        dependencies = "required-after:ichunutil@[" + iChunUtil.VERSION_MAJOR +".0.2," + (iChunUtil.VERSION_MAJOR + 1) + ".0.0)",
+        dependencies = "required-after:ichunutil@[" + iChunUtil.VERSION_MAJOR +".2.0," + (iChunUtil.VERSION_MAJOR + 1) + ".0.0)",
         acceptedMinecraftVersions = iChunUtil.MC_VERSION_RANGE
 )
 public class GooglyEyes
@@ -44,6 +44,6 @@ public class GooglyEyes
         BooleanSupplier oldAcidEyesBooleanSupplier = HeadBase.acidEyesBooleanSupplier;
         HeadBase.acidEyesBooleanSupplier = () -> (GooglyEyes.config.acidTripEyes == 1 || oldAcidEyesBooleanSupplier.getAsBoolean());
 
-        iChunUtil.config.reveal("aggressiveHeadTracking");
+        iChunUtil.config.reveal("aggressiveHeadTracking", "horseEasterEgg");
     }
 }
