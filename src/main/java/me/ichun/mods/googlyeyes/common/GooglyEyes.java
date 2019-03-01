@@ -14,6 +14,7 @@ import java.util.function.BooleanSupplier;
 
 @Mod(name = GooglyEyes.MOD_NAME, modid = GooglyEyes.MOD_ID,
         version = GooglyEyes.VERSION,
+        certificateFingerprint = iChunUtil.CERT_FINGERPRINT,
         clientSideOnly = true,
         acceptableRemoteVersions = "*",
         guiFactory = iChunUtil.GUI_CONFIG_FACTORY,
@@ -22,7 +23,7 @@ import java.util.function.BooleanSupplier;
 )
 public class GooglyEyes
 {
-    public static final String VERSION = iChunUtil.VERSION_MAJOR + ".0.2";
+    public static final String VERSION = iChunUtil.VERSION_MAJOR + ".1.0";
 
     public static final String MOD_NAME = "GooglyEyes";
     public static final String MOD_ID = "googlyeyes";
