@@ -1,0 +1,7 @@
+googlyeyes.config.prop.disabledGoogly.name=Inaktivera rullögon
+googlyeyes.config.prop.acidTripEyes.name=Galna rullögon
+googlyeyes.config.prop.googlyEyeChance.name=Chans att få rullögon
+
+googlyeyes.config.prop.disabledGoogly.comment=För att inaktivera rullögon på en specifik\nentitet, ange dess registernamn här.\nT.ex.: "Pig", "Skeleton"\nFör spelare, ange "player"
+googlyeyes.config.prop.acidTripEyes.comment=Låt rullögonen fara omkring okontrollerat
+googlyeyes.config.prop.googlyEyeChance.comment=Procentuell chans för varelser att få rullögon
