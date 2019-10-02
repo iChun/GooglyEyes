@@ -23,7 +23,7 @@ import java.util.function.BooleanSupplier;
 )
 public class GooglyEyes
 {
-    public static final String VERSION = iChunUtil.VERSION_MAJOR + ".1.0";
+    public static final String VERSION = iChunUtil.VERSION_MAJOR + ".1.1";
 
     public static final String MOD_NAME = "GooglyEyes";
     public static final String MOD_ID = "googlyeyes";

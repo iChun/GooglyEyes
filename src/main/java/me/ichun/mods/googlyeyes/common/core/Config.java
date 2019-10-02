@@ -21,6 +21,10 @@ public class Config extends ConfigBase
     @IntMinMax(min = 0, max = 100)
     public int googlyEyeChance = 20; //default 20%
 
+    @ConfigProp
+    @IntBool
+    public int allPlayersHaveGooglyEyes = 0;
+
     public Config(File file)
     {
         super(file);

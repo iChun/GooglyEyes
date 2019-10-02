@@ -4,6 +4,7 @@ import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.ichunutil.api.client.head.HeadBase;
 import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nonnull;
@@ -156,6 +157,6 @@ public class GooglyTracker
 
     public boolean shouldRender()
     {
-        return renderChance < (GooglyEyes.config.googlyEyeChance / 100F);
+        return renderChance < (GooglyEyes.config.googlyEyeChance / 100F) || GooglyEyes.config.allPlayersHaveGooglyEyes == 1 && parent instanceof EntityPlayer;
     }
 }

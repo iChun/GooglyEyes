@@ -110,7 +110,7 @@ public class EventHandler
                     String entName = entEntry.getName();
                     for(String s : GooglyEyes.config.disabledGoogly)
                     {
-                        if(s.equalsIgnoreCase(entName))
+                        if(s.equalsIgnoreCase(entName) || entEntry.getRegistryName() != null && s.equalsIgnoreCase(entEntry.getRegistryName().toString()))
                         {
                             addLayer = false;
                             break;
