@@ -8,6 +8,7 @@ import me.ichun.mods.ichunutil.common.iChunUtil;
 import me.ichun.mods.ichunutil.common.module.update.UpdateChecker;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.function.BooleanSupplier;
@@ -46,5 +47,14 @@ public class GooglyEyes
         HeadBase.acidEyesBooleanSupplier = () -> (GooglyEyes.config.acidTripEyes == 1 || oldAcidEyesBooleanSupplier.getAsBoolean());
 
         iChunUtil.config.reveal("aggressiveHeadTracking", "horseEasterEgg");
+    }
+
+    @Mod.EventHandler
+    public void onFingerprintViolation(FMLFingerprintViolationEvent event)
+    {
+        if(event.getSource() != null && event.getSource().isFile())
+        {
+            System.out.println("GOOGLYEYES - The file " + event.getSource().getName() + " has been modified. Support for the mod will not be provided.");
+        }
     }
 }
