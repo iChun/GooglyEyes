@@ -1,18 +1,19 @@
 package me.ichun.mods.googlyeyes.common.tracker;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
-import me.ichun.mods.ichunutil.api.client.head.HeadBase;
+import me.ichun.mods.ichunutil.client.head.HeadBase;
 import me.ichun.mods.ichunutil.common.iChunUtil;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class GooglyTracker
 {
-    public final EntityLivingBase parent;
+    public final LivingEntity parent;
     public final HeadBase helper;
     public final Random rand;
     public final float renderChance;
@@ -54,9 +55,10 @@ public class GooglyTracker
             prevRotationPitch = rotationPitch;
             prevRotationRoll = rotationRoll;
 
-            rotationYaw = helper.getHeadYaw(parent.parent, 1F, eye);
-            rotationPitch = helper.getHeadPitch(parent.parent, 1F, eye);
-            rotationRoll = helper.getHeadRoll(parent.parent, 1F, eye);
+            MatrixStack stack = new MatrixStack();
+            rotationYaw = helper.getHeadYaw(parent.parent, stack, 1F, eye);
+            rotationPitch = helper.getHeadPitch(parent.parent, stack, 1F, eye);
+            rotationRoll = helper.getHeadRoll(parent.parent, stack, 1F, eye);
 
             prevDeltaX = deltaX;
             prevDeltaY = deltaY;
@@ -116,7 +118,7 @@ public class GooglyTracker
     }
 
 
-    public GooglyTracker(@Nonnull EntityLivingBase parent, @Nonnull HeadBase helper)
+    public GooglyTracker(@Nonnull LivingEntity parent, @Nonnull HeadBase helper)
     {
         this.parent = parent;
         this.helper = helper;
@@ -139,9 +141,9 @@ public class GooglyTracker
         }
         shouldUpdate = false;
 
-        motionX = parent.posX - parent.prevPosX;
-        motionY = parent.posY - parent.prevPosY;
-        motionZ = parent.posZ - parent.prevPosZ;
+        motionX = parent.getPosX() - parent.prevPosX;
+        motionY = parent.getPosY() - parent.prevPosY;
+        motionZ = parent.getPosZ() - parent.prevPosZ;
 
         for(int i = 0; i < eyes.length; i++)
         {
@@ -157,6 +159,20 @@ public class GooglyTracker
 
     public boolean shouldRender()
     {
-        return renderChance < (GooglyEyes.config.googlyEyeChance / 100F) || GooglyEyes.config.allPlayersHaveGooglyEyes == 1 && parent instanceof EntityPlayer;
+        String name = parent.getName().getUnformattedComponentText();
+        for(String s : GooglyEyes.config.nameOverride)
+        {
+            if(s.equals(name))
+            {
+                return true;
+            }
+        }
+
+        if(GooglyEyes.config.entityOverrideChanceParsed.containsKey(parent.getType().getRegistryName()))
+        {
+            return renderChance < GooglyEyes.config.entityOverrideChanceParsed.get(parent.getType().getRegistryName()) / 100F;
+        }
+
+        return renderChance < (GooglyEyes.config.googlyEyeChance / 100F);
     }
 }

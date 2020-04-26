@@ -1,14 +1,17 @@
 package me.ichun.mods.googlyeyes.common.model;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.model.Model;
+import net.minecraft.client.renderer.model.ModelRenderer;
 
 /**
  * Googly Eyes - iChun
  * Created using Tabula 5.1.0
  */
-public class ModelGooglyEye extends ModelBase {
+public class ModelGooglyEye extends Model
+{
     public ModelRenderer iris12;
     public ModelRenderer iris11;
     public ModelRenderer iris10;
@@ -25,6 +28,8 @@ public class ModelGooglyEye extends ModelBase {
 
     public ModelGooglyEye()
     {
+        super(RenderType::getEntityCutout);
+
         this.textureWidth = 64;
         this.textureHeight = 32;
         this.iris6 = new ModelRenderer(this, 0, 0);
@@ -100,31 +105,29 @@ public class ModelGooglyEye extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha){}
+
+    public void renderIris(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha)
     {
+        this.iris1.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris2.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris3.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris4.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris5.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris6.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris7.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris8.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris9.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris10.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris11.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+        this.iris12.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
     }
 
-    public void renderIris(float f5)
-    {
-        this.iris1.render(f5);
-        this.iris2.render(f5);
-        this.iris3.render(f5);
-        this.iris4.render(f5);
-        this.iris5.render(f5);
-        this.iris6.render(f5);
-        this.iris7.render(f5);
-        this.iris8.render(f5);
-        this.iris9.render(f5);
-        this.iris10.render(f5);
-        this.iris11.render(f5);
-        this.iris12.render(f5);
-    }
-
-    public void renderPupil(float f5)
+    public void renderPupil(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha)
     {
         for(int i = 0; i < pupils.length; i++)
         {
-            pupils[i].render(f5);
+            pupils[i].render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         }
     }
 
