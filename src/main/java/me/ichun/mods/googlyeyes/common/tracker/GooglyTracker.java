@@ -19,7 +19,7 @@ public class GooglyTracker
     public final float renderChance;
 
     public boolean shouldUpdate = true;
-    public long lastUpdateRequest;
+    public int lastUpdateRequest;
 
     public double motionX;
     public double motionY;

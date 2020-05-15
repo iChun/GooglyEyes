@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[31,)" #forge version dep
+issueTrackerURL="https://github.com/iChun/GooglyEyes/issues"
+
+[[mods]]
+    modId="googlyeyes"
+    version="${file.jarVersion}" #mandatory
+    displayName="GooglyEyes"
+    displayURL="http://ichun.me/"
+    authors="iChun"
+    description='''
+    Because why not?
+    '''
+
+[[dependencies.googlyeyes]]
+    modId="forge"
+    mandatory=true
+    versionRange="[31,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.googlyeyes]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.15.2,1.16)"
+    ordering="NONE"
+    side="BOTH"

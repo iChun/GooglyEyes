@@ -13,3 +13,6 @@
 /build
 /libs
 /src/api
+
+# iChunUtil's Access Transformers #
+/src/main/resources/META-INF/accesstransformer.cfg
