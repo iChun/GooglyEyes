@@ -22,12 +22,12 @@ public class Config extends ConfigBase
     public boolean acidTripEyes = false;
 
     @Prop
-    public List<String> disabledGoogly = new ArrayList<>(); //TODO update to resource location of entity type.
+    public List<String> disabledGoogly = new ArrayList<>();
 
     @Prop(min = 0, max = 100)
     public int googlyEyeChance = 20; //default 20%
 
-    @Prop(validator = "overrideChance") //TODO test this
+    @Prop(validator = "overrideChance")
     public List<String> entityOverrideChance = new ArrayList<>();
 
     @Prop
