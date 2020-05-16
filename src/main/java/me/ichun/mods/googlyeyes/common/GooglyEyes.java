@@ -7,6 +7,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -17,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.function.BooleanSupplier;
 
 @Mod(GooglyEyes.MOD_ID)
-public class GooglyEyes//TODO remember to depend on iChunUti
+public class GooglyEyes//TODO remember to depend on iChunUtil
 {
     public static final String MOD_NAME = "Googly Eyes";
     public static final String MOD_ID = "googlyeyes";
@@ -34,6 +36,8 @@ public class GooglyEyes//TODO remember to depend on iChunUti
             config = new Config().init();
 
             MinecraftForge.EVENT_BUS.register(eventHandler = new EventHandler());
+
+            ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> me.ichun.mods.ichunutil.client.core.EventHandlerClient::getConfigGui);
 
             //Set the new acid Eyes Supplier
             BooleanSupplier oldAcidEyesBooleanSupplier = HeadBase.acidEyesBooleanSupplier;
