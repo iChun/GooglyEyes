@@ -16,7 +16,6 @@ import java.util.List;
 
 public class Config extends ConfigBase
 {
-    //TODO localise these
     @CategoryDivider(name = "clientOnly")
     @Prop
     public boolean acidTripEyes = false;

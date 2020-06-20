@@ -4,8 +4,8 @@
   "config.googlyeyes.prop.googlyEyeChance.name": "Googly Eye Chance",
   "config.googlyeyes.prop.allPlayersHaveGooglyEyes.name": "All Players Have Googly Eyes",
 
-  "config.googlyeyes.prop.disabledGoogly.comment": "To disable Googly Eyes on a specific entity, put their registry name in here.\nEG: \"Pig\", \"Skeleton\"\nFor Players, put \"player\"",
-  "config.googlyeyes.prop.acidTripEyes.comment": "Let them googly eyes be trippin'",
-  "config.googlyeyes.prop.googlyEyeChance.comment": "Googly Eye chance (in %)",
-  "config.googlyeyes.prop.allPlayersHaveGooglyEyes.comment": "Should all players have googly eyes?"
+  "config.googlyeyes.prop.disabledGoogly.desc": "To disable Googly Eyes on a specific entity, put their registry name in here.\nEG: \"Pig\", \"Skeleton\"\nFor Players, put \"player\"",
+  "config.googlyeyes.prop.acidTripEyes.desc": "Let them googly eyes be trippin'",
+  "config.googlyeyes.prop.googlyEyeChance.desc": "Googly Eye chance (in %)",
+  "config.googlyeyes.prop.allPlayersHaveGooglyEyes.desc": "Should all players have googly eyes?"
 }
