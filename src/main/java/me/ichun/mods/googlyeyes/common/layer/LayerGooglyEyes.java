@@ -52,6 +52,7 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
             }
 
             GooglyTracker tracker = GooglyEyes.eventHandler.getGooglyTracker(living, helper);
+            tracker.setLastUpdateRequest();
             if(!tracker.shouldRender())
             {
                 return;

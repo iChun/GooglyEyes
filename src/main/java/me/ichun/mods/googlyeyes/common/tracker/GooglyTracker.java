@@ -122,7 +122,7 @@ public class GooglyTracker
     {
         this.parent = parent;
         this.helper = helper;
-        this.rand = new Random(Math.abs(parent.hashCode()) * 8134);
+        this.rand = new Random(Math.abs(parent.getUniqueID().hashCode()) * 8134);
         this.renderChance = rand.nextFloat();
         this.eyes = new EyeInfo[helper.getEyeCount(parent)];
         for(int i = 0; i < eyes.length; i++)
@@ -151,10 +151,14 @@ public class GooglyTracker
         }
     }
 
+    public void setLastUpdateRequest()
+    {
+        lastUpdateRequest = iChunUtil.eventHandlerClient.ticks;
+    }
+
     public void requireUpdate()
     {
         shouldUpdate = true;
-        lastUpdateRequest = iChunUtil.eventHandlerClient.ticks;
     }
 
     public boolean shouldRender()

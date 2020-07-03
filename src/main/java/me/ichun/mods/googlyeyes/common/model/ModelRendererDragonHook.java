@@ -73,6 +73,7 @@ public class ModelRendererDragonHook extends ModelRenderer
         helper.headModel = new ModelRenderer[] { parentModel.head };
 
         GooglyTracker tracker = GooglyEyes.eventHandler.getGooglyTracker(parentModel.dragonInstance, helper);
+        tracker.setLastUpdateRequest();
         if(!tracker.shouldRender())
         {
             return;

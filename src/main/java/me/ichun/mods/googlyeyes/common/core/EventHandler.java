@@ -70,7 +70,7 @@ public class EventHandler
         }
     }
 
-    public GooglyTracker getGooglyTracker(LivingEntity living, HeadBase helper)
+    public GooglyTracker getGooglyTracker(LivingEntity living, HeadBase<?> helper)
     {
         GooglyTracker tracker = trackers.get(living);
         if(tracker == null)
