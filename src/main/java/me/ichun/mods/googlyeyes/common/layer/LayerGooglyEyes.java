@@ -10,7 +10,7 @@ import me.ichun.mods.ichunutil.client.head.HeadHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Vector3f;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
@@ -91,6 +91,7 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
                 stack.translate(-(eyes[0] + helper.getEyeSideOffset(living, stack, partialTicks, i)), -eyes[1], -eyes[2]);
 
                 stack.rotate(Vector3f.YP.rotationDegrees(helper.getEyeRotation(living, stack, partialTicks, i)));
+                stack.rotate(Vector3f.XP.rotationDegrees(helper.getEyeTopRotation(living, stack, partialTicks, i)));
 
                 stack.scale(eyeScale, eyeScale, eyeScale * 0.5F);
 
