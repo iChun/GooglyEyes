@@ -2,7 +2,8 @@ package me.ichun.mods.googlyeyes.common;
 
 import me.ichun.mods.googlyeyes.common.core.Config;
 import me.ichun.mods.googlyeyes.common.core.EventHandler;
-import me.ichun.mods.ichunutil.client.head.HeadBase;
+import me.ichun.mods.ichunutil.client.core.EventHandlerClient;
+import me.ichun.mods.ichunutil.common.head.HeadHandler;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
@@ -42,8 +44,8 @@ public class GooglyEyes//TODO remember to depend on iChunUtil
             ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> me.ichun.mods.ichunutil.client.core.EventHandlerClient::getConfigGui);
 
             //Set the new acid Eyes Supplier
-            BooleanSupplier oldAcidEyesBooleanSupplier = HeadBase.acidEyesBooleanSupplier;
-            HeadBase.acidEyesBooleanSupplier = () -> (config.acidTripEyes || oldAcidEyesBooleanSupplier.getAsBoolean());
+            BooleanSupplier oldAcidEyesBooleanSupplier = HeadHandler.acidEyesBooleanSupplier;
+            HeadHandler.acidEyesBooleanSupplier = () -> (config.acidTripEyes || oldAcidEyesBooleanSupplier.getAsBoolean());
 
             FMLJavaModLoadingContext.get().getModEventBus().addListener(this::finishLoading);
         });
@@ -56,6 +58,7 @@ public class GooglyEyes//TODO remember to depend on iChunUtil
     @OnlyIn(Dist.CLIENT)
     private void finishLoading(FMLLoadCompleteEvent event)
     {
+        HeadHandler.init(); //initialisse our head trackers
         eventHandler.addLayers(); //Let's add the layers
     }
 }

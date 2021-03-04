@@ -5,12 +5,11 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.googlyeyes.common.model.ModelGooglyEye;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
-import me.ichun.mods.ichunutil.client.head.HeadBase;
-import me.ichun.mods.ichunutil.client.head.HeadHandler;
+import me.ichun.mods.ichunutil.common.head.HeadHandler;
+import me.ichun.mods.ichunutil.common.head.HeadInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
@@ -18,6 +17,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3f;
 
 @SuppressWarnings("unchecked")
 public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M>
@@ -36,8 +36,8 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
     @Override
     public void render(MatrixStack stack, IRenderTypeBuffer bufferIn, int packedLightIn, LivingEntity living, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch)
     {
-        HeadBase helper = HeadHandler.getHelperBase(living.getClass());
-        if(helper != null)
+        HeadInfo helper = HeadHandler.getHelper(living.getClass());
+        if(helper != null && !helper.noFaceInfo)
         {
             EntityRenderer<?> render = Minecraft.getInstance().getRenderManager().getRenderer(living);
             if(!(render instanceof LivingRenderer))
@@ -68,7 +68,7 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
                     continue;
                 }
 
-                float eyeScale = helper.getEyeScale(living, stack, partialTicks, i) + helper.maxEyeSizeGrowth(living, i);
+                float eyeScale = helper.getEyeScale(living, stack, partialTicks, i);
 
                 if(eyeScale <= 0F)
                 {

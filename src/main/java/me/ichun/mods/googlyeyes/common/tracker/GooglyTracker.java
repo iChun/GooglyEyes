@@ -1,8 +1,7 @@
 package me.ichun.mods.googlyeyes.common.tracker;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
-import me.ichun.mods.ichunutil.client.head.HeadBase;
+import me.ichun.mods.ichunutil.common.head.HeadInfo;
 import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
@@ -14,7 +13,7 @@ import java.util.Random;
 public class GooglyTracker
 {
     public final LivingEntity parent;
-    public final HeadBase helper;
+    public final HeadInfo helper;
     public final Random rand;
     public final float renderChance;
 
@@ -55,10 +54,9 @@ public class GooglyTracker
             prevRotationPitch = rotationPitch;
             prevRotationRoll = rotationRoll;
 
-            MatrixStack stack = new MatrixStack();
-            rotationYaw = helper.getHeadYaw(parent.parent, stack, 1F, eye);
-            rotationPitch = helper.getHeadPitch(parent.parent, stack, 1F, eye);
-            rotationRoll = helper.getHeadRoll(parent.parent, stack, 1F, eye);
+            rotationYaw = helper.getHeadYaw(parent.parent, 1F, eye);
+            rotationPitch = helper.getHeadPitch(parent.parent, 1F, eye);
+            rotationRoll = helper.getHeadRoll(parent.parent, 1F, eye);
 
             prevDeltaX = deltaX;
             prevDeltaY = deltaY;
@@ -118,11 +116,11 @@ public class GooglyTracker
     }
 
 
-    public GooglyTracker(@Nonnull LivingEntity parent, @Nonnull HeadBase helper)
+    public GooglyTracker(@Nonnull LivingEntity parent, @Nonnull HeadInfo helper)
     {
         this.parent = parent;
         this.helper = helper;
-        this.rand = new Random(Math.abs(parent.getUniqueID().hashCode()) * 8134);
+        this.rand = new Random(Math.abs(parent.getUniqueID().hashCode()) * 8134L);
         this.renderChance = rand.nextFloat();
         this.eyes = new EyeInfo[helper.getEyeCount(parent)];
         for(int i = 0; i < eyes.length; i++)

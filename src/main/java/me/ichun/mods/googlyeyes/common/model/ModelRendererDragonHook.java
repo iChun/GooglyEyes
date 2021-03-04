@@ -4,17 +4,17 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
-import me.ichun.mods.ichunutil.client.head.HeadBase;
-import me.ichun.mods.ichunutil.client.head.HeadHandler;
+import me.ichun.mods.ichunutil.common.head.HeadHandler;
+import me.ichun.mods.ichunutil.common.head.HeadInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3f;
 
 public class ModelRendererDragonHook extends ModelRenderer
 {
@@ -64,8 +64,8 @@ public class ModelRendererDragonHook extends ModelRenderer
             return;
         }
 
-        HeadBase helper = HeadHandler.getHelperBase(parentModel.dragonInstance.getClass());
-        if(helper == null)
+        HeadInfo helper = HeadHandler.getHelper(parentModel.dragonInstance.getClass());
+        if(helper == null || helper.noFaceInfo)
         {
             return;
         }
@@ -86,7 +86,7 @@ public class ModelRendererDragonHook extends ModelRenderer
 
         for(int i = 0; i < eyeCount; i++)
         {
-            float eyeScale = helper.getEyeScale(living, stack, lastPartialTick, i) + helper.maxEyeSizeGrowth(living, i);
+            float eyeScale = helper.getEyeScale(living, stack, lastPartialTick, i);
 
             if(eyeScale <= 0F)
             {

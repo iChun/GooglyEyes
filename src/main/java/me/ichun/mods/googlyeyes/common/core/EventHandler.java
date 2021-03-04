@@ -4,24 +4,23 @@ import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.googlyeyes.common.layer.LayerGooglyEyes;
 import me.ichun.mods.googlyeyes.common.model.ModelRendererDragonHook;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
-import me.ichun.mods.ichunutil.client.head.HeadBase;
-import me.ichun.mods.ichunutil.client.head.HeadHandler;
-import me.ichun.mods.ichunutil.client.head.entity.HeadDragon;
+import me.ichun.mods.ichunutil.common.head.HeadInfo;
 import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 public class EventHandler
 {
@@ -70,7 +69,7 @@ public class EventHandler
         }
     }
 
-    public GooglyTracker getGooglyTracker(LivingEntity living, HeadBase<?> helper)
+    public GooglyTracker getGooglyTracker(LivingEntity living, HeadInfo<?> helper)
     {
         GooglyTracker tracker = trackers.get(living);
         if(tracker == null)
