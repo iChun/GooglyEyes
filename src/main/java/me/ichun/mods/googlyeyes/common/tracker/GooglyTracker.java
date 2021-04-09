@@ -54,9 +54,9 @@ public class GooglyTracker
             prevRotationPitch = rotationPitch;
             prevRotationRoll = rotationRoll;
 
-            rotationYaw = helper.getHeadYaw(parent.parent, 1F, eye);
-            rotationPitch = helper.getHeadPitch(parent.parent, 1F, eye);
-            rotationRoll = helper.getHeadRoll(parent.parent, 1F, eye);
+            rotationYaw = helper.getHeadYaw(parent.parent, 1F, eye, -1);
+            rotationPitch = helper.getHeadPitch(parent.parent, 1F, eye, -1);
+            rotationRoll = helper.getHeadRoll(parent.parent, 1F, eye, -1);
 
             prevDeltaX = deltaX;
             prevDeltaY = deltaY;

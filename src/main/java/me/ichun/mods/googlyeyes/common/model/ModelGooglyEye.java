@@ -138,7 +138,7 @@ public class ModelGooglyEye extends Model
         for(int i = 0; i < pupils.length; i++)
         {
             pupils[i].rotationPointX = -x * shiftFactor;// * (float)Math.cos(Math.toRadians((y / 1F) * 90F));
-            pupils[i].rotationPointY = -y * shiftFactor * (float)Math.cos(Math.toRadians((x / 1F) * 90F));
+            pupils[i].rotationPointY = -y * shiftFactor * (float)Math.cos(Math.toRadians(x * 90F));
         }
     }
 

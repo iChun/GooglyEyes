@@ -6,7 +6,7 @@ issueTrackerURL="https://github.com/iChun/GooglyEyes/issues"
 [[mods]]
     modId="googlyeyes"
     version="${file.jarVersion}" #mandatory
-    displayName="GooglyEyes"
+    displayName="Googly Eyes"
     displayURL="http://ichun.me/"
     authors="iChun"
     description='''

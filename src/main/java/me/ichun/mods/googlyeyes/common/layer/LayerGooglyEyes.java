@@ -63,7 +63,7 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
 
             for(int i = 0; i < eyeCount; i++)
             {
-                if(living.isInvisible() && helper.affectedByInvisibility(living, i))
+                if(living.isInvisible() && helper.affectedByInvisibility(living, i, -1))
                 {
                     continue;
                 }
@@ -80,12 +80,14 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
                 // thepatcat: Creatures only get googly eyes in adulthood. It's science.
                 helper.preChildEntHeadRenderCalls(living, stack, renderer);
 
-                float[] joint = helper.getHeadJointOffset(living, stack, partialTicks, i);
+                float[] joint = helper.getHeadJointOffset(living, stack, partialTicks, i, -1);
                 stack.translate(-joint[0], -joint[1], -joint[2]);
 
-                stack.rotate(Vector3f.ZP.rotationDegrees(helper.getHeadRoll(living, stack, partialTicks, i)));
-                stack.rotate(Vector3f.YP.rotationDegrees(helper.getHeadYaw(living, stack, partialTicks, i)));
-                stack.rotate(Vector3f.XP.rotationDegrees(helper.getHeadPitch(living, stack, partialTicks, i)));
+                stack.rotate(Vector3f.ZP.rotationDegrees(helper.getHeadRoll(living, stack, partialTicks, i, -1)));
+                stack.rotate(Vector3f.YP.rotationDegrees(helper.getHeadYaw(living, stack, partialTicks, i, -1)));
+                stack.rotate(Vector3f.XP.rotationDegrees(helper.getHeadPitch(living, stack, partialTicks, i, -1)));
+
+                helper.postHeadTranslation(living, stack, partialTicks);
 
                 float[] eyes = helper.getEyeOffsetFromJoint(living, stack, partialTicks, i);
                 stack.translate(-(eyes[0] + helper.getEyeSideOffset(living, stack, partialTicks, i)), -eyes[1], -eyes[2]);
@@ -93,8 +95,9 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
                 stack.rotate(Vector3f.YP.rotationDegrees(helper.getEyeRotation(living, stack, partialTicks, i)));
                 stack.rotate(Vector3f.XP.rotationDegrees(helper.getEyeTopRotation(living, stack, partialTicks, i)));
 
-                stack.scale(eyeScale, eyeScale, eyeScale * 0.5F);
+                stack.scale(eyeScale, eyeScale, eyeScale * 0.4F);
 
+                //rendering the eyes
                 IVertexBuilder buffer = bufferIn.getBuffer(RENDER_TYPE);
 
                 int overlay = LivingRenderer.getPackedOverlay(living, 0.0F);
@@ -121,6 +124,7 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
                     modelGooglyEye.renderPupil(stack, buffer, packedLightIn, overlay, pupilColours[0], pupilColours[1], pupilColours[2], 1F);
                     stack.pop();
                 }
+                //end rendering the eyes
 
                 stack.pop();
             }

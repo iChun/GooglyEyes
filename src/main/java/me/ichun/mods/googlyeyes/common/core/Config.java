@@ -17,10 +17,8 @@ import java.util.List;
 public class Config extends ConfigBase
 {
     @CategoryDivider(name = "clientOnly")
-    @Prop
     public boolean acidTripEyes = false;
 
-    @Prop
     public List<String> disabledGoogly = new ArrayList<>();
 
     @Prop(min = 0, max = 100)
@@ -29,10 +27,9 @@ public class Config extends ConfigBase
     @Prop(validator = "overrideChance")
     public List<String> entityOverrideChance = new ArrayList<>();
 
-    @Prop
     public List<String> nameOverride = new ArrayList<>();
 
-    public HashMap<ResourceLocation, Integer> entityOverrideChanceParsed = new HashMap<>();
+    public transient HashMap<ResourceLocation, Integer> entityOverrideChanceParsed = new HashMap<>();
 
     public boolean overrideChance(Object o)
     {
