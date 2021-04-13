@@ -4,7 +4,7 @@ import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.googlyeyes.common.layer.LayerGooglyEyes;
 import me.ichun.mods.googlyeyes.common.model.ModelRendererDragonHook;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
-import me.ichun.mods.ichunutil.common.head.HeadInfo;
+import me.ichun.mods.ichunutil.api.common.head.HeadInfo;
 import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EnderDragonRenderer;

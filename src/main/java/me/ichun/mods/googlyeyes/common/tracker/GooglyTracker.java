@@ -1,7 +1,7 @@
 package me.ichun.mods.googlyeyes.common.tracker;
 
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
-import me.ichun.mods.ichunutil.common.head.HeadInfo;
+import me.ichun.mods.ichunutil.api.common.head.HeadInfo;
 import me.ichun.mods.ichunutil.common.iChunUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;

@@ -6,7 +6,7 @@ import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.googlyeyes.common.model.ModelGooglyEye;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
 import me.ichun.mods.ichunutil.common.head.HeadHandler;
-import me.ichun.mods.ichunutil.common.head.HeadInfo;
+import me.ichun.mods.ichunutil.api.common.head.HeadInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
