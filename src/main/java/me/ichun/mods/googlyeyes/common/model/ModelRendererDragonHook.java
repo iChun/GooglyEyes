@@ -110,25 +110,25 @@ public class ModelRendererDragonHook extends ModelRenderer
             int overlay = LivingRenderer.getPackedOverlay(living, 0.0F);
 
             float[] irisColours = helper.getIrisColours(living, stack, lastPartialTick, i);
-            modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
+            modelGooglyEye.renderCornea(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
 
             float[] pupilColours = helper.getPupilColours(living, stack, lastPartialTick, i);
 
             float pupilScale = helper.getPupilScale(living, stack, lastPartialTick, i);
             stack.push();
             stack.scale(pupilScale, pupilScale, 1F);
-            modelGooglyEye.movePupil(tracker.eyes[i].prevDeltaX + (tracker.eyes[i].deltaX - tracker.eyes[i].prevDeltaX) * lastPartialTick, tracker.eyes[i].prevDeltaY + (tracker.eyes[i].deltaY - tracker.eyes[i].prevDeltaY) * lastPartialTick, pupilScale);
-            modelGooglyEye.renderPupil(stack, buffer, packedLightIn, overlay, pupilColours[0], pupilColours[1], pupilColours[2], 1F);
+            modelGooglyEye.moveIris(tracker.eyes[i].prevDeltaX + (tracker.eyes[i].deltaX - tracker.eyes[i].prevDeltaX) * lastPartialTick, tracker.eyes[i].prevDeltaY + (tracker.eyes[i].deltaY - tracker.eyes[i].prevDeltaY) * lastPartialTick, pupilScale);
+            modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, pupilColours[0], pupilColours[1], pupilColours[2], 1F);
             stack.pop();
 
             if(helper.doesEyeGlow(living, i))
             {
                 buffer = bufferIn.getBuffer(RENDER_TYPE_EYES);
-                modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
+                modelGooglyEye.renderCornea(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
 
                 stack.push();
                 stack.scale(pupilScale, pupilScale, 1F);
-                modelGooglyEye.renderPupil(stack, buffer, packedLightIn, overlay, pupilColours[0], pupilColours[1], pupilColours[2], 1F);
+                modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, pupilColours[0], pupilColours[1], pupilColours[2], 1F);
                 stack.pop();
             }
 
