@@ -24,7 +24,7 @@ public class GooglyTracker
     public double motionY;
     public double motionZ;
 
-    public EyeInfo[] eyes;
+    public EyeInfo[][] eyes; //[headIndex][eyeIndex]. ew arrays
 
     public class EyeInfo
     {
@@ -122,10 +122,14 @@ public class GooglyTracker
         this.helper = helper;
         this.rand = new Random(Math.abs(parent.getUniqueID().hashCode()) * 8134L);
         this.renderChance = rand.nextFloat();
-        this.eyes = new EyeInfo[helper.getEyeCount(parent)];
+        this.eyes = new EyeInfo[helper.getHeadCount(parent)][];
         for(int i = 0; i < eyes.length; i++)
         {
-            this.eyes[i] = new EyeInfo();
+            this.eyes[i] = new EyeInfo[helper.getHeadInfo(parent, i).getEyeCount(parent)];
+            for(int i1 = 0; i1 < this.eyes[i].length; i1++)
+            {
+                this.eyes[i][i1] = new EyeInfo();
+            }
         }
 
         update();
@@ -145,7 +149,10 @@ public class GooglyTracker
 
         for(int i = 0; i < eyes.length; i++)
         {
-            eyes[i].update(i, this, motionX, motionY, motionZ);
+            for(int i1 = 0; i1 < eyes[i].length; i1++)
+            {
+                eyes[i][i1].update(i, this, motionX, motionY, motionZ);
+            }
         }
     }
 
