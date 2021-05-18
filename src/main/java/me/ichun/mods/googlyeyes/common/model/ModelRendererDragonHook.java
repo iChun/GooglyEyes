@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.googlyeyes.common.tracker.GooglyTracker;
 import me.ichun.mods.ichunutil.api.common.head.HeadInfo;
+import me.ichun.mods.ichunutil.api.common.head.HeadInfoDelegate;
 import me.ichun.mods.ichunutil.common.head.HeadHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -65,7 +66,7 @@ public class ModelRendererDragonHook extends ModelRenderer
         }
 
         HeadInfo helper = HeadHandler.getHelper(parentModel.dragonInstance.getClass());
-        if(helper == null || helper.noFaceInfo)
+        if(helper == null || helper.noFaceInfo || helper instanceof HeadInfoDelegate) //Dragons are special, do not allow HeadInfoDelegate.
         {
             return;
         }
@@ -113,26 +114,26 @@ public class ModelRendererDragonHook extends ModelRenderer
 
                 int overlay = LivingRenderer.getPackedOverlay(living, 0.0F);
 
+                float[] corneaColours = helper.getCorneaColours(living, stack, lastPartialTick, i);
+                modelGooglyEye.renderCornea(stack, buffer, packedLightIn, overlay, corneaColours[0], corneaColours[1], corneaColours[2], 1F);
+
                 float[] irisColours = helper.getIrisColours(living, stack, lastPartialTick, i);
-                modelGooglyEye.renderCornea(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
 
-                float[] pupilColours = helper.getPupilColours(living, stack, lastPartialTick, i);
-
-                float pupilScale = helper.getPupilScale(living, stack, lastPartialTick, i);
+                float irisScale = helper.getIrisScale(living, stack, lastPartialTick, i);
                 stack.push();
-                stack.scale(pupilScale, pupilScale, 1F);
-                modelGooglyEye.moveIris(tracker.eyes[0][i].prevDeltaX + (tracker.eyes[0][i].deltaX - tracker.eyes[0][i].prevDeltaX) * lastPartialTick, tracker.eyes[0][i].prevDeltaY + (tracker.eyes[0][i].deltaY - tracker.eyes[0][i].prevDeltaY) * lastPartialTick, pupilScale);
-                modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, pupilColours[0], pupilColours[1], pupilColours[2], 1F);
+                stack.scale(irisScale, irisScale, 1F);
+                modelGooglyEye.moveIris(tracker.eyes[0][i].prevDeltaX + (tracker.eyes[0][i].deltaX - tracker.eyes[0][i].prevDeltaX) * lastPartialTick, tracker.eyes[0][i].prevDeltaY + (tracker.eyes[0][i].deltaY - tracker.eyes[0][i].prevDeltaY) * lastPartialTick, irisScale);
+                modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
                 stack.pop();
 
                 if(helper.doesEyeGlow(living, i))
                 {
                     buffer = bufferIn.getBuffer(RENDER_TYPE_EYES);
-                    modelGooglyEye.renderCornea(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
+                    modelGooglyEye.renderCornea(stack, buffer, packedLightIn, overlay, corneaColours[0], corneaColours[1], corneaColours[2], 1F);
 
                     stack.push();
-                    stack.scale(pupilScale, pupilScale, 1F);
-                    modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, pupilColours[0], pupilColours[1], pupilColours[2], 1F);
+                    stack.scale(irisScale, irisScale, 1F);
+                    modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
                     stack.pop();
                 }
 

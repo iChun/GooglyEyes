@@ -46,6 +46,11 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
             }
             LivingRenderer<?, ?> renderer = (LivingRenderer<?, ?>)render;
 
+            if(!parentHelper.setup(living, renderer))
+            {
+                return;
+            }
+
             GooglyTracker tracker = GooglyEyes.eventHandler.getGooglyTracker(living, parentHelper);
             tracker.setLastUpdateRequest();
             if(!tracker.shouldRender())
@@ -60,12 +65,12 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
             {
                 HeadInfo helper = parentHelper.getHeadInfo(living, headIndex);
                 
-                if(parentHelper.noFaceInfo)
+                if(helper.noFaceInfo)
                 {
                     continue;
                 }
 
-                helper.setHeadModel(renderer);
+                helper.setHeadModel(living, renderer);
                 if(helper.headModel == null)
                 {
                     continue;
@@ -95,9 +100,9 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
                     float[] joint = helper.getHeadJointOffset(living, stack, partialTicks, headIndex);
                     stack.translate(-joint[0], -joint[1], -joint[2]);
 
-                    stack.rotate(Vector3f.ZP.rotationDegrees(helper.getHeadRoll(living, stack, partialTicks, eyeIndex, -1)));
-                    stack.rotate(Vector3f.YP.rotationDegrees(helper.getHeadYaw(living, stack, partialTicks, eyeIndex, -1)));
-                    stack.rotate(Vector3f.XP.rotationDegrees(helper.getHeadPitch(living, stack, partialTicks, eyeIndex, -1)));
+                    stack.rotate(Vector3f.ZP.rotationDegrees(helper.getHeadRoll(living, stack, partialTicks, headIndex, eyeIndex)));
+                    stack.rotate(Vector3f.YP.rotationDegrees(helper.getHeadYaw(living, stack, partialTicks, headIndex, eyeIndex)));
+                    stack.rotate(Vector3f.XP.rotationDegrees(helper.getHeadPitch(living, stack, partialTicks, headIndex, eyeIndex)));
 
                     helper.postHeadTranslation(living, stack, partialTicks);
 
@@ -114,26 +119,26 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
 
                     int overlay = LivingRenderer.getPackedOverlay(living, 0.0F);
 
+                    float[] corneaColours = helper.getCorneaColours(living, stack, partialTicks, eyeIndex);
+                    modelGooglyEye.renderCornea(stack, buffer, packedLightIn, overlay, corneaColours[0], corneaColours[1], corneaColours[2], 1F);
+
                     float[] irisColours = helper.getIrisColours(living, stack, partialTicks, eyeIndex);
-                    modelGooglyEye.renderCornea(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
 
-                    float[] pupilColours = helper.getPupilColours(living, stack, partialTicks, eyeIndex);
-
-                    float pupilScale = helper.getPupilScale(living, stack, partialTicks, eyeIndex);
+                    float irisScale = helper.getIrisScale(living, stack, partialTicks, eyeIndex);
                     stack.push();
-                    stack.scale(pupilScale, pupilScale, 1F);
-                    modelGooglyEye.moveIris(tracker.eyes[headIndex][eyeIndex].prevDeltaX + (tracker.eyes[headIndex][eyeIndex].deltaX - tracker.eyes[headIndex][eyeIndex].prevDeltaX) * partialTicks, tracker.eyes[headIndex][eyeIndex].prevDeltaY + (tracker.eyes[headIndex][eyeIndex].deltaY - tracker.eyes[headIndex][eyeIndex].prevDeltaY) * partialTicks, pupilScale);
-                    modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, pupilColours[0], pupilColours[1], pupilColours[2], 1F);
+                    stack.scale(irisScale, irisScale, 1F);
+                    modelGooglyEye.moveIris(tracker.eyes[headIndex][eyeIndex].prevDeltaX + (tracker.eyes[headIndex][eyeIndex].deltaX - tracker.eyes[headIndex][eyeIndex].prevDeltaX) * partialTicks, tracker.eyes[headIndex][eyeIndex].prevDeltaY + (tracker.eyes[headIndex][eyeIndex].deltaY - tracker.eyes[headIndex][eyeIndex].prevDeltaY) * partialTicks, irisScale);
+                    modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
                     stack.pop();
 
                     if(helper.doesEyeGlow(living, eyeIndex))
                     {
                         buffer = bufferIn.getBuffer(RENDER_TYPE_EYES);
-                        modelGooglyEye.renderCornea(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
+                        modelGooglyEye.renderCornea(stack, buffer, packedLightIn, overlay, corneaColours[0], corneaColours[1], corneaColours[2], 1F);
 
                         stack.push();
-                        stack.scale(pupilScale, pupilScale, 1F);
-                        modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, pupilColours[0], pupilColours[1], pupilColours[2], 1F);
+                        stack.scale(irisScale, irisScale, 1F);
+                        modelGooglyEye.renderIris(stack, buffer, packedLightIn, overlay, irisColours[0], irisColours[1], irisColours[2], 1F);
                         stack.pop();
                     }
                     //end rendering the eyes

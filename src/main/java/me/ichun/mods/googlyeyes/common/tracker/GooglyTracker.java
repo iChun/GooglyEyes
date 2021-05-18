@@ -3,6 +3,9 @@ package me.ichun.mods.googlyeyes.common.tracker;
 import me.ichun.mods.googlyeyes.common.GooglyEyes;
 import me.ichun.mods.ichunutil.api.common.head.HeadInfo;
 import me.ichun.mods.ichunutil.common.iChunUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
@@ -48,15 +51,15 @@ public class GooglyTracker
             prevDeltaY = deltaY = -1F;
         }
 
-        public void update(int eye, GooglyTracker parent, double motionX, double motionY, double motionZ)
+        public void update(HeadInfo helper, int head, int eye, GooglyTracker parent, double motionX, double motionY, double motionZ)
         {
             prevRotationYaw = rotationYaw;
             prevRotationPitch = rotationPitch;
             prevRotationRoll = rotationRoll;
 
-            rotationYaw = helper.getHeadYaw(parent.parent, 1F, eye, -1);
-            rotationPitch = helper.getHeadPitch(parent.parent, 1F, eye, -1);
-            rotationRoll = helper.getHeadRoll(parent.parent, 1F, eye, -1);
+            rotationYaw = helper.getHeadYaw(parent.parent, 1F, head, eye);
+            rotationPitch = helper.getHeadPitch(parent.parent, 1F, head, eye);
+            rotationRoll = helper.getHeadRoll(parent.parent, 1F, head, eye);
 
             prevDeltaX = deltaX;
             prevDeltaY = deltaY;
@@ -147,11 +150,28 @@ public class GooglyTracker
         motionY = parent.getPosY() - parent.prevPosY;
         motionZ = parent.getPosZ() - parent.prevPosZ;
 
+        if(helper.multiModel != null) //It is a HeadInfoDelegate
+        {
+            EntityRenderer<?> render = Minecraft.getInstance().getRenderManager().getRenderer(parent);
+            if(!(render instanceof LivingRenderer))
+            {
+                return;
+            }
+            LivingRenderer<?, ?> renderer = (LivingRenderer<?, ?>)render;
+
+            if(!helper.setup(parent, renderer))
+            {
+                return;
+            }
+        }
+
         for(int i = 0; i < eyes.length; i++)
         {
+            HeadInfo childInfo = helper.getHeadInfo(parent, i);
+
             for(int i1 = 0; i1 < eyes[i].length; i1++)
             {
-                eyes[i][i1].update(i, this, motionX, motionY, motionZ);
+                eyes[i][i1].update(childInfo, i, i1, this, motionX, motionY, motionZ);
             }
         }
     }
