@@ -87,6 +87,10 @@ public class ModelRendererDragonHook extends ModelRenderer
 
         for(int headIndex = 0; headIndex < headCount; headIndex++)
         {
+            stack.push();
+
+            helper.correctPosition(living, stack, lastPartialTick);
+
             int eyeCount = helper.getEyeCount(living);
 
             for(int i = 0; i < eyeCount; i++)
@@ -140,6 +144,8 @@ public class ModelRendererDragonHook extends ModelRenderer
                 bufferIn.getBuffer(RENDER_TYPE_RESET);
                 stack.pop();
             }
+
+            stack.pop();
         }
     }
 }

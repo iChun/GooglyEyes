@@ -76,6 +76,10 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
                     continue;
                 }
 
+                stack.push();
+
+                helper.correctPosition(living, stack, partialTicks);
+
                 int eyeCount = helper.getEyeCount(living);
 
                 for(int eyeIndex = 0; eyeIndex < eyeCount; eyeIndex++)
@@ -145,6 +149,8 @@ public class LayerGooglyEyes<T extends LivingEntity, M extends EntityModel<T>> e
 
                     stack.pop();
                 }
+
+                stack.pop();
             }
         }
     }
