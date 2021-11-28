@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.function.BooleanSupplier;
 
 @Mod(GooglyEyes.MOD_ID)
-public class GooglyEyes//TODO remember to depend on iChunUtil
+public class GooglyEyes
 {
     public static final String MOD_NAME = "Googly Eyes";
     public static final String MOD_ID = "googlyeyes";
